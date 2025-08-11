@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvTyZxbdgysSeDKaPSRdV5j1jIUzItR5vne8Q5qnWeHqdNBQcrWVs6UjpJEDoJC4Cwjg/exec"; // Reemplaza con la nueva URL de la Aplicación web
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvTyZxbdgysSeDKaPSRdV5j1jIUzItR5vne8Q5qnWeHqdNBQcrWVs6UjpJEDoJC4Cwjg/exec";
 
 async function cargarOpciones() {
   try {
@@ -137,43 +137,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("Enviando datos:", dataObj);
 
-      const res = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify(dataObj),
         headers: { "Content-Type": "application/json" },
-        // Descomenta la siguiente línea si el error CORS persiste
-        // mode: "no-cors"
+        mode: "no-cors" // Evita el bloqueo por CORS
       });
 
-      if (!res.ok) {
-        throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
-      }
+      alerta.classList.remove("alert-info");
+      alerta.classList.add("alert-success");
+      alerta.textContent = "Datos enviados correctamente. Por favor, verifica la hoja de cálculo para confirmar el registro.";
+      form.reset();
+      form.classList.remove("was-validated");
 
-      const result = await res.json();
-
-      if (result.status === "OK") {
-        alerta.classList.remove("alert-info");
-        alerta.classList.add("alert-success");
-        alerta.textContent = `Registro guardado con éxito. Nº asignado: ${result.numero}`;
-        form.reset();
-        form.classList.remove("was-validated");
-        document.getElementById("numero").value = result.numero;
-
-        const selects = document.querySelectorAll('select');
-        selects.forEach(select => {
-          const choicesInstance = select.choices;
-          if (choicesInstance) {
-            choicesInstance.setChoiceByValue("");
-          }
-        });
-      } else {
-        throw new Error(result.message || "Error en el servidor");
-      }
+      const selects = document.querySelectorAll('select');
+      selects.forEach(select => {
+        const choicesInstance = select.choices;
+        if (choicesInstance) {
+          choicesInstance.setChoiceByValue("");
+        }
+      });
     } catch (err) {
       console.error("Error en la solicitud:", err);
       alerta.classList.remove("alert-info");
       alerta.classList.add("alert-danger");
-      alerta.textContent = "Error al guardar los datos: " + err.message + ". Intenta verificar la spreadsheet.";
+      alerta.textContent = "Error al enviar los datos: " + err.message + ". Verifica la hoja de cálculo.";
     }
   });
 });
