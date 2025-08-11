@@ -22,155 +22,172 @@
     <h1 class="mb-4 text-center fw-bold">Registro ╭∩╮( •̀_•́ )╭∩╮</h1>
 
     <form id="quirForm" class="needs-validation" novalidate>
-      <div class="row g-3">
-        <div class="col-md-3">
-          <label for="estado" class="form-label">Estado</label>
-          <select class="form-select" id="estado" name="estado" required>
-            <option value="" selected disabled>Seleccione...</option>
-            <option value="REALIZADO">REALIZADO</option>
-            <option value="SUSPENDIDO">SUSPENDIDO</option>
-            <option value="FALLECIDO">FALLECIDO</option>
-          </select>
-          <div class="invalid-feedback">Por favor seleccione un estado válido.</div>
-        </div>
 
-        <div class="col-md-3">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input type="date" class="form-control" id="fecha" name="fecha" required min="" max="" />
-          <div class="invalid-feedback">Seleccione una fecha válida (mes actual o siguiente).</div>
-        </div>
-
-
-        <div class="col-md-4">
-          <label for="nombres" class="form-label">Nombres y Apellidos</label>
-          <input type="text" class="form-control" id="nombres" name="nombres" required minlength="3" />
-          <div class="invalid-feedback">Por favor ingrese nombres y apellidos.</div>
-        </div>
-
-        <div class="col-md-2">
-          <label for="sexo" class="form-label">Sexo</label>
-          <select class="form-select" id="sexo" name="sexo" required>
-            <option value="" selected disabled>Seleccione...</option>
-            <option value="MASCULINO">Masculino</option>
-            <option value="FEMENINO">Femenino</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un sexo.</div>
-        </div>
-
-        <div class="col-md-2">
-          <label for="edad" class="form-label">Edad</label>
-          <input type="number" min="0" max="130" class="form-control" id="edad" name="edad" required />
-          <div class="invalid-feedback">Ingrese una edad válida.</div>
-        </div>
-
-        <div class="col-md-3">
-          <label for="hcl" class="form-label">Historia Clínica (HCL)</label>
-          <input type="text" class="form-control" id="hcl" name="hcl" pattern="\d+" required />
-          <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
-        </div>
-
-
-        <div class="col-md-3">
-          <label for="especialidad" class="form-label">ESPECIALIDAD</label>
-          <select class="form-select" id="especialidad" name="especialidad" required>
-            <option value="" selected disabled>Seleccione...</option>
-            <option value="CIRUGÍA GENERAL">CIRUGÍA GENERAL</option>
-            <option value="CIRUGÍA PEDIÁTRICA">CIRUGÍA PEDIÁTRICA</option>
-            <option value="CIRUGÍA PLÁSTICA ">CIRUGÍA PLÁSTICA </option>
-            <option value="CIRUGÍA VASCULAR ">CIRUGÍA VASCULAR </option>
-            <option value="GINECOLOGÍA">GINECOLOGÍA</option>
-            <option value="OFTALMOLOGÍA">OFTALMOLOGÍA</option>
-            <option value="OTORRINOLARINGOLOGÍA">ORL</option>
-            <option value="UROLOGÍA">UROLOGÍA</option>
-            <option value="TRAUMATOLOGÍA Y ORTOPEDIA">TRAUMATOLOGÍA</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un QX válido.</div>
-        </div>
-
-        <div class="col-md-4">
-          <label for="procedencia" class="form-label">procedencia</label>
-          <select class="form-select" id="procedencia" name="procedencia" required>
-            <option value="" selected disabled>Seleccione...</option>
-            <option value="EMERGENCIA ADULTO">EMERGENCIA ADULTO</option>
-            <option value="EMERGENCIA PEDIATRICA">EMERGENCIA PEDIATRICA</option>
-            <option value="HOSPITALIZACIÓN PEDIATRICA">HOSPITALIZACIÓN PEDIATRICA </option>
-            <option value="HOSPITALIZACIÓN QUIRÚRGICA">HOSPITALIZACIÓN QUIRÚRGICA </option>
-            <option value="HOSPITALIZACIÓN CLINICA">HOSPITALIZACIÓN CLINICA</option>
-            <option value="HOSPITALIZACIÓN OBSTETRICA ">HOSPITALIZACIÓN OBSTETRICA</option>
-            <option value="UCI INTERMEDIOS">UCI INTERMEDIOS</option>
-            <option value="UCI">UCI</option>
-            <option value="MEDICINA TRANSFUNCIONAL">MEDICINA TRANSFUNCIONAL</option>
-            <option value="UCI NEO">UCI NEO</option>
-            <option value="HOSPITAL DEL DÍA">HOSPITAL DEL DÍA</option>
-            <option value="ENDOSCOPIA">ENDOSCOPIA</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un QX válido.</div>
-        </div>
-
-        <div class="col-md-3">
-          <label for="cedula" class="form-label">Cédula</label>
-          <input type="text" class="form-control" id="cedula" name="cedula" pattern="\d{10}" required />
-          <div class="invalid-feedback">Ingrese una cédula válida de 10 dígitos.</div>
-        </div>
-
-        <div class="col-md-2">
-          <label for="qx" class="form-label">QX</label>
-          <select class="form-select" id="qx" name="qx" required>
-            <option value="" selected disabled>Seleccione...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un QX válido.</div>
-        </div>
-
-        <div class="col-md-5">
-          <label for="medico_cirujano" class="form-label">Médico Cirujano</label>
-          <select class="form-select" id="medico_cirujano" name="medico_cirujano" required>
-            <option value="" selected disabled>Seleccione cirujano</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un médico cirujano.</div>
-        </div>
-
-        <div class="col-md-5">
-          <label for="enfermero" class="form-label">Enfermero</label>
-          <select class="form-select" id="enfermero" name="enfermero" required>
-            <option value="" selected disabled>Seleccione enfermero</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un enfermero.</div>
-        </div>
-
-        <div class="col-md-5">
-          <label for="anestesiologo" class="form-label">Anestesiologo</label>
-          <select class="form-select" id="anestesiologo" name="anestesiologo" required>
-            <option value="" selected disabled>Seleccione anestesiologo</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un anestesiologo.</div>
-        </div>
-
-        <div class="col-12">
-          <label for="diagnostico" class="form-label">Diagnóstico</label>
-          <select class="form-select" id="diagnostico" name="diagnostico" size="7" required>
-            <option value="" disabled selected>Seleccione diagnóstico (usa scroll)</option>
-          </select>
-          <div class="invalid-feedback">Seleccione un diagnóstico.</div>
-        </div>
-
-        <div class="col-12">
-          <label for="observaciones" class="form-label">Observaciones</label>
-          <textarea class="form-control" id="observaciones" name="observaciones" rows="3"
-            placeholder="Opcional"></textarea>
-        </div>
-
-        <div class="col-12 text-center mt-4">
-          <button type="submit" class="btn btn-primary btn-lg px-5">Guardar</button>
+      <!-- CARD: Datos Paciente -->
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white fw-bold">Datos Paciente</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label for="estado" class="form-label">Estado</label>
+              <select class="form-select" id="estado" name="estado" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="REALIZADO">REALIZADO</option>
+                <option value="SUSPENDIDO">SUSPENDIDO</option>
+                <option value="FALLECIDO">FALLECIDO</option>
+              </select>
+              <div class="invalid-feedback">Por favor seleccione un estado válido.</div>
+            </div>
+    
+            <div class="col-md-3">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input type="date" class="form-control" id="fecha" name="fecha" required min="" max="" />
+              <div class="invalid-feedback">Seleccione una fecha válida (mes actual o siguiente).</div>
+            </div>
+    
+            <div class="col-md-4">
+              <label for="nombres" class="form-label">Nombres y Apellidos</label>
+              <input type="text" class="form-control" id="nombres" name="nombres" required minlength="3" />
+              <div class="invalid-feedback">Por favor ingrese nombres y apellidos.</div>
+            </div>
+    
+            <div class="col-md-2">
+              <label for="sexo" class="form-label">Sexo</label>
+              <select class="form-select" id="sexo" name="sexo" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="MASCULINO">Masculino</option>
+                <option value="FEMENINO">Femenino</option>
+              </select>
+              <div class="invalid-feedback">Seleccione un sexo.</div>
+            </div>
+    
+            <div class="col-md-2">
+              <label for="edad" class="form-label">Edad</label>
+              <input type="number" min="0" max="130" class="form-control" id="edad" name="edad" required />
+              <div class="invalid-feedback">Ingrese una edad válida.</div>
+            </div>
+    
+            <div class="col-md-3">
+              <label for="hcl" class="form-label">Historia Clínica (HCL)</label>
+              <input type="text" class="form-control" id="hcl" name="hcl" pattern="\d+" required />
+              <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
+            </div>
+    
+            <div class="col-md-3">
+              <label for="especialidad" class="form-label">ESPECIALIDAD</label>
+              <select class="form-select" id="especialidad" name="especialidad" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="CIRUGÍA GENERAL">CIRUGÍA GENERAL</option>
+                <option value="CIRUGÍA PEDIÁTRICA">CIRUGÍA PEDIÁTRICA</option>
+                <option value="CIRUGÍA PLÁSTICA ">CIRUGÍA PLÁSTICA </option>
+                <option value="CIRUGÍA VASCULAR ">CIRUGÍA VASCULAR </option>
+                <option value="GINECOLOGÍA">GINECOLOGÍA</option>
+                <option value="OFTALMOLOGÍA">OFTALMOLOGÍA</option>
+                <option value="OTORRINOLARINGOLOGÍA">ORL</option>
+                <option value="UROLOGÍA">UROLOGÍA</option>
+                <option value="TRAUMATOLOGÍA Y ORTOPEDIA">TRAUMATOLOGÍA</option>
+              </select>
+              <div class="invalid-feedback">Seleccione una especialidad válida.</div>
+            </div>
+    
+            <div class="col-md-4">
+              <label for="procedencia" class="form-label">Procedencia</label>
+              <select class="form-select" id="procedencia" name="procedencia" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="EMERGENCIA ADULTO">EMERGENCIA ADULTO</option>
+                <option value="EMERGENCIA PEDIÁTRICA">EMERGENCIA PEDIÁTRICA</option>
+                <option value="HOSPITALIZACIÓN PEDIÁTRICA">HOSPITALIZACIÓN PEDIÁTRICA</option>
+                <option value="HOSPITALIZACIÓN QUIRÚRGICA">HOSPITALIZACIÓN QUIRÚRGICA</option>
+                <option value="HOSPITALIZACIÓN CLÍNICA">HOSPITALIZACIÓN CLÍNICA</option>
+                <option value="HOSPITALIZACIÓN OBSTÉTRICA">HOSPITALIZACIÓN OBSTÉTRICA</option>
+                <option value="UCI INTERMEDIOS">UCI INTERMEDIOS</option>
+                <option value="UCI">UCI</option>
+                <option value="MEDICINA TRANSFUNCIONAL">MEDICINA TRANSFUNCIONAL</option>
+                <option value="UCI NEO">UCI NEO</option>
+                <option value="HOSPITAL DEL DÍA">HOSPITAL DEL DÍA</option>
+                <option value="ENDOSCOPIA">ENDOSCOPIA</option>
+              </select>
+              <div class="invalid-feedback">Seleccione una procedencia válida.</div>
+            </div>
+    
+            <div class="col-md-3">
+              <label for="cedula" class="form-label">Cédula</label>
+              <input type="text" class="form-control" id="cedula" name="cedula" pattern="\d{10}" required />
+              <div class="invalid-feedback">Ingrese una cédula válida de 10 dígitos.</div>
+            </div>
+    
+            <div class="col-md-2">
+              <label for="qx" class="form-label">QX</label>
+              <select class="form-select" id="qx" name="qx" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+              <div class="invalid-feedback">Seleccione un QX válido.</div>
+            </div>
+          </div>
         </div>
       </div>
+    
+      <!-- CARD: Datos Cirujano -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white fw-bold">Datos Cirujano</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-5">
+              <label for="medico_cirujano" class="form-label">Médico Cirujano</label>
+              <select class="form-select" id="medico_cirujano" name="medico_cirujano" required>
+                <option value="" selected disabled>Seleccione cirujano</option>
+                <!-- Aquí se llenan dinámicamente -->
+              </select>
+              <div class="invalid-feedback">Seleccione un médico cirujano.</div>
+            </div>
+    
+            <div class="col-md-5">
+              <label for="enfermero" class="form-label">Enfermero</label>
+              <select class="form-select" id="enfermero" name="enfermero" required>
+                <option value="" selected disabled>Seleccione enfermero</option>
+                <!-- Aquí se llenan dinámicamente -->
+              </select>
+              <div class="invalid-feedback">Seleccione un enfermero.</div>
+            </div>
+    
+            <div class="col-md-5">
+              <label for="anestesiologo" class="form-label">Anestesiólogo</label>
+              <select class="form-select" id="anestesiologo" name="anestesiologo" required>
+                <option value="" selected disabled>Seleccione anestesiólogo</option>
+                <!-- Aquí se llenan dinámicamente -->
+              </select>
+              <div class="invalid-feedback">Seleccione un anestesiólogo.</div>
+            </div>
+    
+            <div class="col-12">
+              <label for="diagnostico" class="form-label">Diagnóstico</label>
+              <select class="form-select" id="diagnostico" name="diagnostico" size="7" required>
+                <option value="" disabled selected>Seleccione diagnóstico (usa scroll)</option>
+                <!-- Aquí se llenan dinámicamente -->
+              </select>
+              <div class="invalid-feedback">Seleccione un diagnóstico.</div>
+            </div>
+    
+            <div class="col-12">
+              <label for="observaciones" class="form-label">Observaciones</label>
+              <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Opcional"></textarea>
+            </div>
+    
+            <div class="col-12 text-center mt-4">
+              <button type="submit" class="btn btn-primary btn-lg px-5">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
     </form>
 
     <div id="alertaRespuesta" class="alert mt-4 d-none" role="alert"></div>
