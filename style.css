@@ -1,0 +1,31 @@
+body {
+    background: #e6f0f5;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #1a1a1a;
+  }
+  
+  h1 {
+    color: #065a82;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.12);
+  }
+  
+  form {
+    background: #ffffff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(6, 90, 130, 0.2);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  select[size] {
+    height: auto;
+  }
+  
+  #alertaRespuesta {
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  

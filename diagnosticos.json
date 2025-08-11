@@ -1,0 +1,13 @@
+[
+    {"codigo": "A01", "descripcion": "Tifoidea y paratifoidea"},
+    {"codigo": "A011", "descripcion": "Paratifoidea A"},
+    {"codigo": "A012", "descripcion": "Paratifoidea B"},
+    {"codigo": "A013", "descripcion": "Paratifoidea C"},
+    {"codigo": "A02", "descripcion": "Otras infecciones por salmonella"},
+    {"codigo": "A03", "descripcion": "Shigelosis"},
+    {"codigo": "A04", "descripcion": "Otras infecciones intestinales bacterianas"},
+    {"codigo": "A05", "descripcion": "Otras intoxicaciones alimentarias bacterianas"},
+    {"codigo": "A06", "descripcion": "Amebiasis"},
+    {"codigo": "A07", "descripcion": "Otras enfermedades protozoarias intestinales"}
+  ]
+  
