@@ -2,7 +2,7 @@ const SCRIPT_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_A6jax7Mto3gE
 
 async function cargarOpciones() {
   try {
-    const [cirujanos, enfermeros, instrumentistas, diagnosticos] = await Promise.all([
+    const [cirujanos, enfermeros, anestesiologos, diagnosticos] = await Promise.all([
       fetch('cirujanos.json').then(res => {
         if (!res.ok) throw new Error('Error al cargar cirujanos.json: ' + res.statusText);
         return res.json();
@@ -11,8 +11,8 @@ async function cargarOpciones() {
         if (!res.ok) throw new Error('Error al cargar enfermeros.json: ' + res.statusText);
         return res.json();
       }),
-      fetch('instrumentistas.json').then(res => {
-        if (!res.ok) throw new Error('Error al cargar instrumentistas.json: ' + res.statusText);
+      fetch('anestesiologos.json').then(res => {
+        if (!res.ok) throw new Error('Error al cargar anestesiologos.json: ' + res.statusText);
         return res.json();
       }),
       fetch('diagnosticos.json').then(res => {
@@ -23,7 +23,7 @@ async function cargarOpciones() {
 
     llenarSelect('medico_cirujano', cirujanos);
     llenarSelect('enfermero', enfermeros);
-    llenarSelect('instrumentista', instrumentistas);
+    llenarSelect('anestesiologo', anestesiologos);
     llenarSelectDiagnosticos('diagnostico', diagnosticos);
 
     inicializarChoices();
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formBody.append('entry.51260872', dataObj.qx || '');
     formBody.append('entry.447555786', dataObj.medico_cirujano || '');
     formBody.append('entry.1042485773', dataObj.enfermero || '');
-    formBody.append('entry.700782129', dataObj.instrumentista || '');
+    formBody.append('entry.7007821s29', dataObj.anestesiologo || '');
     formBody.append('entry.1236994085', dataObj.diagnostico || '');
     formBody.append('entry.1285987142', dataObj.observaciones || '');
 
