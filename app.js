@@ -1,22 +1,22 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrSwJsiMmc8x4vIogAkAWuULW6f_13aHKvXUfxebcWjNCHbOQROb4vxaQcmassBYrN4g/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvTyZxbdgysSeDKaPSRdV5j1jIUzItR5vne8Q5qnWeHqdNBQcrWVs6UjpJEDoJC4Cwjg/exec"; // Reemplaza con la nueva URL de la Aplicación web
 
 async function cargarOpciones() {
   try {
     const [cirujanos, enfermeros, instrumentistas, diagnosticos] = await Promise.all([
       fetch('cirujanos.json').then(res => {
-        if (!res.ok) throw new Error('Error al cargar cirujanos.json');
+        if (!res.ok) throw new Error('Error al cargar cirujanos.json: ' + res.statusText);
         return res.json();
       }),
       fetch('enfermeros.json').then(res => {
-        if (!res.ok) throw new Error('Error al cargar enfermeros.json');
+        if (!res.ok) throw new Error('Error al cargar enfermeros.json: ' + res.statusText);
         return res.json();
       }),
       fetch('instrumentistas.json').then(res => {
-        if (!res.ok) throw new Error('Error al cargar instrumentistas.json');
+        if (!res.ok) throw new Error('Error al cargar instrumentistas.json: ' + res.statusText);
         return res.json();
       }),
       fetch('diagnosticos.json').then(res => {
-        if (!res.ok) throw new Error('Error al cargar diagnosticos.json');
+        if (!res.ok) throw new Error('Error al cargar diagnosticos.json: ' + res.statusText);
         return res.json();
       })
     ]);
@@ -135,12 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
       alerta.classList.add("alert-info");
       alerta.textContent = "Guardando... por favor espere";
 
-      console.log("Enviando datos:", dataObj); // Depuración
+      console.log("Enviando datos:", dataObj);
 
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify(dataObj),
         headers: { "Content-Type": "application/json" },
+        // Descomenta la siguiente línea si el error CORS persiste
+        // mode: "no-cors"
       });
 
       if (!res.ok) {
@@ -171,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error en la solicitud:", err);
       alerta.classList.remove("alert-info");
       alerta.classList.add("alert-danger");
-      alerta.textContent = "Error al guardar los datos: " + err.message;
+      alerta.textContent = "Error al guardar los datos: " + err.message + ". Intenta verificar la spreadsheet.";
     }
   });
 });
