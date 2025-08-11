@@ -152,6 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
     formBody.append('entry.2142979259', dataObj.edad || '');
     formBody.append('entry.2104873773', dataObj.hcl || '');
     formBody.append('entry.1351880325', dataObj.cedula || '');
+    formBody.append('entry.44199439', dataObj.especialidad || '');
+    formBody.append('entry.1988959802', dataObj.procedencia || '');    
     formBody.append('entry.51260872', dataObj.qx || '');
     formBody.append('entry.447555786', dataObj.medico_cirujano || '');
     formBody.append('entry.1042485773', dataObj.enfermero || '');

@@ -56,7 +56,6 @@
             <option value="" selected disabled>Seleccione...</option>
             <option value="MASCULINO">Masculino</option>
             <option value="FEMENINO">Femenino</option>
-            <option value="OTRO">Otro</option>
           </select>
           <div class="invalid-feedback">Seleccione un sexo.</div>
         </div>
@@ -71,6 +70,27 @@
           <label for="hcl" class="form-label">Historia Clínica (HCL)</label>
           <input type="text" class="form-control" id="hcl" name="hcl" pattern="\d+" required />
           <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="especialidad" class="form-label">ESPECIALIDAD</label>
+          <select class="form-select" id="especialidad" name="especialidad" required>
+            <option value="" selected disabled>Seleccione...</option>
+            <option value="CIRUGÍA GENERAL">CIRUGÍA GENERAL</option><option value="CIRUGÍA PEDIÁTRICA">CIRUGÍA PEDIÁTRICA</option><option value="CIRUGÍA PLÁSTICA ">CIRUGÍA PLÁSTICA </option><option value="CIRUGÍA VASCULAR ">CIRUGÍA VASCULAR </option>
+            <option value="GINECOLOGÍA">GINECOLOGÍA</option><option value="OFTALMOLOGÍA">OFTALMOLOGÍA</option><option value="OTORRINOLARINGOLOGÍA">ORL</option><option value="UROLOGÍA">UROLOGÍA</option><option value="TRAUMATOLOGÍA Y ORTOPEDIA">TRAUMATOLOGÍA</option>
+          </select>
+          <div class="invalid-feedback">Seleccione un QX válido.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="procedencia" class="form-label">procedencia</label>
+          <select class="form-select" id="procedencia" name="procedencia" required>
+            <option value="" selected disabled>Seleccione...</option>
+            <option value="EMERGENCIA ADULTO">EMERGENCIA ADULTO</option><option value="EMERGENCIA PEDIATRICA">EMERGENCIA PEDIATRICA</option><option value="HOSPITALIZACIÓN PEDIATRICA">HOSPITALIZACIÓN PEDIATRICA </option><option value="HOSPITALIZACIÓN QUIRÚRGICA">HOSPITALIZACIÓN QUIRÚRGICA  </option>
+            <option value="HOSPITALIZACIÓN CLINICA">HOSPITALIZACIÓN CLINICA</option><option value="HOSPITALIZACIÓN OBSTETRICA ">HOSPITALIZACIÓN OBSTETRICA</option><option value="UCI INTERMEDIOS">UCI INTERMEDIOS</option><option value="UCI">UCI</option><option value="MEDICINA TRANSFUNCIONAL">MEDICINA TRANSFUNCIONAL</option>
+            <option value="UCI NEO">UCI NEO</option><option value="HOSPITAL DEL DÍA">HOSPITAL DEL DÍA</option><option value="ENDOSCOPIA">ENDOSCOPIA</option>
+          </select>
+          <div class="invalid-feedback">Seleccione un QX válido.</div>
         </div>
 
         <div class="col-md-3">
