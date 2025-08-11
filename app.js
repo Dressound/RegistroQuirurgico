@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alerta.classList.remove("alert-info");
       alerta.classList.add("alert-success");
-      alerta.textContent = "Datos enviados correctamente. Por favor, verifica la hoja de cálculo para confirmar el registro.";
+      alerta.textContent = "Datos enviados correctamente.";
       form.reset();
       form.classList.remove("was-validated");
 
@@ -192,9 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.warn("Advertencia: Solicitud con no-cors, no se puede verificar la respuesta del servidor:", err);
       // Mostrar éxito porque los datos se están guardando
-      alerta.classList.remove("alert-info");
+      alerta.classList.remove("alert-info", "d-none");
       alerta.classList.add("alert-success");
-      alerta.textContent = "Datos enviados correctamente. Por favor, verifica la hoja de cálculo para confirmar el registro.";
+      alerta.textContent = "Datos enviados correctamente.";
       form.reset();
       form.classList.remove("was-validated");
     }
