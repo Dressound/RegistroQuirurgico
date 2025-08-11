@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrSwJsiMmc8x4vIogAkAWuULW6f_13aHKvXUfxebcWjNCHbOQROb4vxaQcmassBYrN4g/exec"; // Ejemplo: https://docs.google.com/forms/d/e/.../formResponse
+const SCRIPT_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_A6jax7Mto3gEbfMQXajO1EnrVS9BXHTlfUwHLmtLUp3qWA/formResponse"; // Ejemplo: https://docs.google.com/forms/u/1/d/15ZdybPfdqITrOxKznky33mCDH8UM7gPTywgYhWHpHkg/formResponse
 
      async function cargarOpciones() {
        try {
@@ -132,19 +132,19 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrSwJsiMmc8x4vIogAk
 
          // Mapear los nombres de los campos a los entry IDs del Google Form
          const formBody = new URLSearchParams();
-         formBody.append('entry.123456789', dataObj.estado || ''); // Reemplaza con los entry IDs reales
-         formBody.append('entry.987654321', dataObj.fecha || '');
-         formBody.append('entry.456789123', dataObj.nombres || '');
-         formBody.append('entry.321654987', dataObj.sexo || '');
-         formBody.append('entry.654987321', dataObj.edad || '');
-         formBody.append('entry.789123456', dataObj.hcl || '');
-         formBody.append('entry.147258369', dataObj.cedula || '');
-         formBody.append('entry.258369147', dataObj.qx || '');
-         formBody.append('entry.369147258', dataObj.medico_cirujano || '');
-         formBody.append('entry.741852963', dataObj.enfermero || '');
-         formBody.append('entry.852963741', dataObj.instrumentista || '');
-         formBody.append('entry.963741852', dataObj.diagnostico || '');
-         formBody.append('entry.159357486', dataObj.observaciones || '');
+         formBody.append('entry.487126253', dataObj.estado || ''); // Reemplaza con el ID real
+         formBody.append('entry.365267802_year', dataObj.fecha || ''); // Reemplaza con el ID real
+         formBody.append('entry.129819069', dataObj.nombres || '');
+         formBody.append('entry.411420745', dataObj.sexo || '');
+         formBody.append('entry.2142979259', dataObj.edad || '');
+         formBody.append('entry.2104873773', dataObj.hcl || '');
+         formBody.append('entry.1351880325', dataObj.cedula || '');
+         formBody.append('entry.51260872', dataObj.qx || '');
+         formBody.append('entry.447555786', dataObj.medico_cirujano || '');
+         formBody.append('entry.1042485773', dataObj.enfermero || '');
+         formBody.append('entry.700782129', dataObj.instrumentista || '');
+         formBody.append('entry.1236994085', dataObj.diagnostico || '');
+         formBody.append('entry.1285987142', dataObj.observaciones || '');
 
          try {
            alerta.classList.remove("alert-danger", "d-none");
