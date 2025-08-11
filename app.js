@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/1zLi9zvgfDvGNvz9AAV8_NApqhmZ8_YYDpHco-FizVO8/edit"; // Ejemplo: https://docs.google.com/forms/d/e/.../formResponse
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrSwJsiMmc8x4vIogAkAWuULW6f_13aHKvXUfxebcWjNCHbOQROb4vxaQcmassBYrN4g/exec"; // Ejemplo: https://docs.google.com/forms/d/e/.../formResponse
 
      async function cargarOpciones() {
        try {
