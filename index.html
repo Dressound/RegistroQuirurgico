@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,6 +15,7 @@
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <div class="container py-5">
@@ -37,6 +39,7 @@
           <input type="date" class="form-control" id="fecha" name="fecha" required min="" max="" />
           <div class="invalid-feedback">Seleccione una fecha válida (mes actual o siguiente).</div>
         </div>
+
 
         <div class="col-md-4">
           <label for="nombres" class="form-label">Nombres y Apellidos</label>
@@ -66,12 +69,20 @@
           <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
         </div>
 
+
         <div class="col-md-3">
           <label for="especialidad" class="form-label">ESPECIALIDAD</label>
           <select class="form-select" id="especialidad" name="especialidad" required>
             <option value="" selected disabled>Seleccione...</option>
-            <option value="CIRUGÍA GENERAL">CIRUGÍA GENERAL</option><option value="CIRUGÍA PEDIÁTRICA">CIRUGÍA PEDIÁTRICA</option><option value="CIRUGÍA PLÁSTICA ">CIRUGÍA PLÁSTICA </option><option value="CIRUGÍA VASCULAR ">CIRUGÍA VASCULAR </option>
-            <option value="GINECOLOGÍA">GINECOLOGÍA</option><option value="OFTALMOLOGÍA">OFTALMOLOGÍA</option><option value="OTORRINOLARINGOLOGÍA">ORL</option><option value="UROLOGÍA">UROLOGÍA</option><option value="TRAUMATOLOGÍA Y ORTOPEDIA">TRAUMATOLOGÍA</option>
+            <option value="CIRUGÍA GENERAL">CIRUGÍA GENERAL</option>
+            <option value="CIRUGÍA PEDIÁTRICA">CIRUGÍA PEDIÁTRICA</option>
+            <option value="CIRUGÍA PLÁSTICA ">CIRUGÍA PLÁSTICA </option>
+            <option value="CIRUGÍA VASCULAR ">CIRUGÍA VASCULAR </option>
+            <option value="GINECOLOGÍA">GINECOLOGÍA</option>
+            <option value="OFTALMOLOGÍA">OFTALMOLOGÍA</option>
+            <option value="OTORRINOLARINGOLOGÍA">ORL</option>
+            <option value="UROLOGÍA">UROLOGÍA</option>
+            <option value="TRAUMATOLOGÍA Y ORTOPEDIA">TRAUMATOLOGÍA</option>
           </select>
           <div class="invalid-feedback">Seleccione un QX válido.</div>
         </div>
@@ -80,9 +91,18 @@
           <label for="procedencia" class="form-label">procedencia</label>
           <select class="form-select" id="procedencia" name="procedencia" required>
             <option value="" selected disabled>Seleccione...</option>
-            <option value="EMERGENCIA ADULTO">EMERGENCIA ADULTO</option><option value="EMERGENCIA PEDIATRICA">EMERGENCIA PEDIATRICA</option><option value="HOSPITALIZACIÓN PEDIATRICA">HOSPITALIZACIÓN PEDIATRICA </option><option value="HOSPITALIZACIÓN QUIRÚRGICA">HOSPITALIZACIÓN QUIRÚRGICA  </option>
-            <option value="HOSPITALIZACIÓN CLINICA">HOSPITALIZACIÓN CLINICA</option><option value="HOSPITALIZACIÓN OBSTETRICA ">HOSPITALIZACIÓN OBSTETRICA</option><option value="UCI INTERMEDIOS">UCI INTERMEDIOS</option><option value="UCI">UCI</option><option value="MEDICINA TRANSFUNCIONAL">MEDICINA TRANSFUNCIONAL</option>
-            <option value="UCI NEO">UCI NEO</option><option value="HOSPITAL DEL DÍA">HOSPITAL DEL DÍA</option><option value="ENDOSCOPIA">ENDOSCOPIA</option>
+            <option value="EMERGENCIA ADULTO">EMERGENCIA ADULTO</option>
+            <option value="EMERGENCIA PEDIATRICA">EMERGENCIA PEDIATRICA</option>
+            <option value="HOSPITALIZACIÓN PEDIATRICA">HOSPITALIZACIÓN PEDIATRICA </option>
+            <option value="HOSPITALIZACIÓN QUIRÚRGICA">HOSPITALIZACIÓN QUIRÚRGICA </option>
+            <option value="HOSPITALIZACIÓN CLINICA">HOSPITALIZACIÓN CLINICA</option>
+            <option value="HOSPITALIZACIÓN OBSTETRICA ">HOSPITALIZACIÓN OBSTETRICA</option>
+            <option value="UCI INTERMEDIOS">UCI INTERMEDIOS</option>
+            <option value="UCI">UCI</option>
+            <option value="MEDICINA TRANSFUNCIONAL">MEDICINA TRANSFUNCIONAL</option>
+            <option value="UCI NEO">UCI NEO</option>
+            <option value="HOSPITAL DEL DÍA">HOSPITAL DEL DÍA</option>
+            <option value="ENDOSCOPIA">ENDOSCOPIA</option>
           </select>
           <div class="invalid-feedback">Seleccione un QX válido.</div>
         </div>
@@ -97,8 +117,14 @@
           <label for="qx" class="form-label">QX</label>
           <select class="form-select" id="qx" name="qx" required>
             <option value="" selected disabled>Seleccione...</option>
-            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-            <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
           </select>
           <div class="invalid-feedback">Seleccione un QX válido.</div>
         </div>
@@ -137,7 +163,8 @@
 
         <div class="col-12">
           <label for="observaciones" class="form-label">Observaciones</label>
-          <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Opcional"></textarea>
+          <textarea class="form-control" id="observaciones" name="observaciones" rows="3"
+            placeholder="Opcional"></textarea>
         </div>
 
         <div class="col-12 text-center mt-4">
@@ -159,4 +186,5 @@
   <script src="app.js"></script>
 
 </body>
+
 </html>
