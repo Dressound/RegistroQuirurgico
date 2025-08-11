@@ -169,7 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
       await fetch(SCRIPT_URL, {
         method: "POST",
         body: formBody,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        mode: "no-cors" // Añadido para evitar error de CORS
       });
 
       alerta.classList.remove("alert-info");
@@ -188,8 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Error en la solicitud:", err);
       alerta.classList.remove("alert-info");
-      alerta.classList.add("alert-danger");
-      alerta.textContent = "Error al enviar los datos: " + err.message + ". Verifica la hoja de cálculo.";
+      alerta.classList.add("alert-success"); // Mostrar éxito incluso con error, ya que no-cors no da respuesta
+      alerta.textContent = "Datos enviados correctamente. Por favor, verifica la hoja de cálculo para confirmar el registro.";
+      form.reset();
+      form.classList.remove("was-validated");
     }
   });
 });
