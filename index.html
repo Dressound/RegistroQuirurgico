@@ -48,19 +48,19 @@
               </select>
               <div class="invalid-feedback">Por favor seleccione un estado válido.</div>
             </div>
-    
+
             <div class="col-md-3">
               <label for="fecha" class="form-label">Fecha</label>
               <input type="date" class="form-control" id="fecha" name="fecha" required min="" max="" />
               <div class="invalid-feedback">Seleccione una fecha válida (mes actual o siguiente).</div>
             </div>
-    
+
             <div class="col-md-4">
               <label for="nombres" class="form-label">Nombres y Apellidos</label>
               <input type="text" class="form-control" id="nombres" name="nombres" required minlength="3" />
               <div class="invalid-feedback">Por favor ingrese nombres y apellidos.</div>
             </div>
-    
+
             <div class="col-md-2">
               <label for="sexo" class="form-label">Sexo</label>
               <select class="form-select" id="sexo" name="sexo" required>
@@ -70,19 +70,19 @@
               </select>
               <div class="invalid-feedback">Seleccione un sexo.</div>
             </div>
-    
+
             <div class="col-md-2">
               <label for="edad" class="form-label">Edad</label>
               <input type="number" min="0" max="130" class="form-control" id="edad" name="edad" required />
               <div class="invalid-feedback">Ingrese una edad válida.</div>
             </div>
-    
+
             <div class="col-md-3">
               <label for="hcl" class="form-label">Historia Clínica (HCL)</label>
               <input type="text" class="form-control" id="hcl" name="hcl" pattern="\d+" required />
               <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
             </div>
-    
+
             <div class="col-md-3">
               <label for="especialidad" class="form-label">ESPECIALIDAD</label>
               <select class="form-select" id="especialidad" name="especialidad" required>
@@ -100,9 +100,9 @@
               <div class="invalid-feedback">Seleccione una especialidad válida.</div>
             </div>
 
-      
 
-    
+
+
             <div class="col-md-4">
               <label for="procedencia" class="form-label">Procedencia</label>
               <select class="form-select" id="procedencia" name="procedencia" required>
@@ -122,13 +122,13 @@
               </select>
               <div class="invalid-feedback">Seleccione una procedencia válida.</div>
             </div>
-    
+
             <div class="col-md-3">
               <label for="cedula" class="form-label">Cédula</label>
               <input type="text" class="form-control" id="cedula" name="cedula" pattern="\d{10}" required />
               <div class="invalid-feedback">Ingrese una cédula válida de 10 dígitos.</div>
             </div>
-    
+
             <div class="col-md-2">
               <label for="qx" class="form-label">QX</label>
               <select class="form-select" id="qx" name="qx" required>
@@ -147,7 +147,7 @@
           </div>
         </div>
       </div>
-    
+
       <!-- CARD: Datos Cirujano -->
       <div class="card mb-4">
         <div class="card-header bg-secondary text-white fw-bold">Datos Cirujano</div>
@@ -161,7 +161,7 @@
               </select>
               <div class="invalid-feedback">Seleccione un médico cirujano.</div>
             </div>
-    
+
             <div class="col-md-5">
               <label for="enfermero" class="form-label">Enfermero</label>
               <select class="form-select" id="enfermero" name="enfermero" required>
@@ -170,7 +170,7 @@
               </select>
               <div class="invalid-feedback">Seleccione un enfermero.</div>
             </div>
-    
+
             <div class="col-md-5">
               <label for="anestesiologo" class="form-label">Anestesiólogo</label>
               <select class="form-select" id="anestesiologo" name="anestesiologo" required>
@@ -179,7 +179,7 @@
               </select>
               <div class="invalid-feedback">Seleccione un anestesiólogo.</div>
             </div>
-    
+
             <div class="col-12">
               <label for="diagnostico" class="form-label">Diagnóstico</label>
               <select class="form-select" id="diagnostico" name="diagnostico" size="7" required>
@@ -188,19 +188,20 @@
               </select>
               <div class="invalid-feedback">Seleccione un diagnóstico.</div>
             </div>
-    
+
             <div class="col-12">
               <label for="observaciones" class="form-label">Observaciones</label>
-              <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Opcional"></textarea>
+              <textarea class="form-control" id="observaciones" name="observaciones" rows="3"
+                placeholder="Opcional"></textarea>
             </div>
-    
+
             <div class="col-12 text-center mt-4">
               <button type="submit" class="btn btn-primary btn-lg px-5">Guardar</button>
             </div>
           </div>
         </div>
       </div>
-    
+
     </form>
 
     <div id="alertaRespuesta" class="alert mt-4 d-none" role="alert"></div>
