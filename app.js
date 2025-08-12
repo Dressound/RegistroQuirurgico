@@ -157,10 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
     formBody.append('entry.51260872', dataObj.qx || '');
     formBody.append('entry.447555786', dataObj.medico_cirujano || '');
     formBody.append('entry.1042485773', dataObj.enfermero || '');
-    formBody.append('entry.7007821s29', dataObj.anestesiologo || '');
+    formBody.append('entry.700782129', dataObj.anestesiologo || '');
     formBody.append('entry.1236994085', dataObj.diagnostico || '');
     formBody.append('entry.1285987142', dataObj.observaciones || '');
-
+    formBody.append('entry.1820166925', dataObj.tipo || '');
+    
     try {
       alerta.classList.remove("alert-danger", "d-none");
       alerta.classList.add("alert-info");
