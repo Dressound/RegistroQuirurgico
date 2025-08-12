@@ -46,9 +46,6 @@ function llenarSelect(id, lista) {
   });
 }
 
-
-
-
 function llenarSelectDiagnosticos(id, lista) {
   const select = document.getElementById(id);
   lista.forEach(item => {
