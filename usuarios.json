@@ -1,0 +1,6 @@
+[
+  { "usuario": "admin", "password": "12345", "nombre": "Administrador General" },
+  { "usuario": "drhugo", "password": "cirujano", "nombre": "Dr. Hugo Tapia" },
+  { "usuario": "yamilet", "password": "anestesia", "nombre": "Dra. Yamilet Pérez" },
+  { "usuario": "jhonny", "password": "enfermeria", "nombre": "Enf. Jhonny Rosero" }
+]
