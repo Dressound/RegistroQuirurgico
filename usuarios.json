@@ -1,6 +1,6 @@
 [
   { "usuario": "admin", "password": "12345", "nombre": "Administrador General" },
-  { "usuario": "admin1", "password": "12345", "nombre": "Dr. Hugo Tapia" },
+  { "usuario": "drhugo", "password": "12345", "nombre": "Dr. Hugo Tapia" },
   { "usuario": "yamilet", "password": "12345", "nombre": "Dra. Yamilet Pérez" },
   { "usuario": "jhonny", "password": "12345", "nombre": "Enf. Jhonny Rosero" }
 ]
