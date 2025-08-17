@@ -2,8 +2,8 @@
  * CONFIG
  ******************************************************/
 const SCRIPT_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_A6jax7Mto3gEbfMQXajO1EnrVS9BXHTlfUwHLmtLUp3qWA/formResponse";
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIjLmNFr9xaa4rAx0hPrU6fngh76oQezTXJuFl4VlF6xSAJHwU6bS1U8iNqoObuaAEz00hHsCzZdyx/pub?gid=507093533&single=true&output=csv";
 
+// Ahora la lista de usuarios se cargará desde JSON
 let USUARIOS = [];
 
 /******************************************************
@@ -12,21 +12,23 @@ let USUARIOS = [];
 let usuarioLogueado = null;
 let opcionesCargadas = false;
 let choicesIniciados = false;
-let pacientesRegistrados = [];
-let currentPage = 1;
-const rowsPerPage = 5;
 
 /******************************************************
  * UTILIDADES
  ******************************************************/
-function $(selector) { return document.querySelector(selector); }
-function $all(selector) { return Array.from(document.querySelectorAll(selector)); }
+function $(selector) {
+  return document.querySelector(selector);
+}
+function $all(selector) {
+  return Array.from(document.querySelectorAll(selector));
+}
 
 /******************************************************
  * LOGIN
  ******************************************************/
 function intentarLogin(usuario, password) {
-  return USUARIOS.find(u => u.usuario === usuario && u.password === password) || null;
+  const user = USUARIOS.find(u => u.usuario === usuario && u.password === password);
+  return user || null;
 }
 
 function mostrarApp(user) {
@@ -37,9 +39,12 @@ function mostrarApp(user) {
   $("#appView").style.display = "block";
   $("#welcomeBar").style.display = "block";
   $("#welcomeText").innerHTML = `Bienvenido, <b>${user.nombre}</b>`;
+
   $("#usuario_registro").value = user.nombre;
 
-  if (!opcionesCargadas) cargarOpciones();
+  if (!opcionesCargadas) {
+    cargarOpciones();
+  }
 }
 
 function cerrarSesion() {
@@ -62,6 +67,7 @@ async function cargarUsuarios() {
     const res = await fetch("usuarios.json");
     if (!res.ok) throw new Error("Error al cargar usuarios.json");
     USUARIOS = await res.json();
+    console.log("Usuarios cargados:", USUARIOS);
   } catch (err) {
     console.error("No se pudieron cargar los usuarios:", err);
   }
@@ -142,82 +148,9 @@ function setFechaLimites(inputFecha) {
   const hoy = new Date();
   const primerDiaMesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
   const ultimoDiaMesSiguiente = new Date(hoy.getFullYear(), hoy.getMonth() + 2, 0);
+
   inputFecha.min = primerDiaMesActual.toISOString().slice(0, 10);
   inputFecha.max = ultimoDiaMesSiguiente.toISOString().slice(0, 10);
-}
-
-/******************************************************
- * TABLA DE REGISTROS
- ******************************************************/
-function mostrarFormulario() {
-  $("#formularioView").style.display = "block";
-  $("#tablaView").style.display = "none";
-}
-
-function mostrarTabla() {
-  $("#formularioView").style.display = "none";
-  $("#tablaView").style.display = "block";
-  cargarCSV();
-}
-
-function cargarCSV() {
-  Papa.parse(CSV_URL, {
-    download: true,
-    header: false, // seguimos leyendo todo como datos
-    complete: function(results) {
-      if (results.data.length === 0) return;
-
-      // Guardar la primera fila como encabezados
-      const encabezados = results.data[0];
-      pacientesRegistrados = results.data.slice(1); // resto de filas como pacientes
-
-      // Limpiar encabezados actuales
-      const thead = $("#tablaPacientes thead tr#encabezados");
-      thead.innerHTML = "";
-      encabezados.forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        th.style.backgroundColor = "#065a82"; // color de fondo encabezado
-        th.style.color = "#ffffff";           // color de texto
-        th.style.padding = "8px";
-        thead.appendChild(th);
-      });
-
-      renderizarTabla();
-    }
-  });
-}
-
-function renderizarTabla() {
-  const tbody = $("#tablaPacientes tbody");
-  const buscador = $("#buscador").value.toLowerCase();
-  const filtered = pacientesRegistrados.filter(p => Object.values(p).join(" ").toLowerCase().includes(buscador));
-
-  const totalPages = Math.ceil(filtered.length / rowsPerPage);
-  if (currentPage > totalPages) currentPage = totalPages || 1;
-
-  const start = (currentPage - 1) * rowsPerPage;
-  const end = start + rowsPerPage;
-  const pageItems = filtered.slice(start, end);
-
-  tbody.innerHTML = "";
-  pageItems.forEach(row => {
-    const tr = document.createElement("tr");
-    row.forEach(val => {  // cada fila es un array de valores
-      const td = document.createElement("td");
-      td.textContent = val;
-      td.style.padding = "6px";
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  $("#pageInfo").textContent = `Página ${currentPage} de ${totalPages || 1}`;
-}
-
-function cambiarPagina(offset) {
-  currentPage += offset;
-  renderizarTabla();
 }
 
 /******************************************************
@@ -228,22 +161,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const loginError = $("#loginError");
   const btnLogout = $("#btnLogout");
 
-  $("#btnFormulario")?.addEventListener("click", mostrarFormulario);
-  $("#btnRegistros")?.addEventListener("click", mostrarTabla);
-  $("#prevPage")?.addEventListener("click", () => cambiarPagina(-1));
-  $("#nextPage")?.addEventListener("click", () => cambiarPagina(1));
-  $("#buscador")?.addEventListener("input", () => renderizarTabla());
-
+  // Primero cargamos los usuarios
   await cargarUsuarios();
 
+  // Restaurar sesión si existe
   const guardado = sessionStorage.getItem("usuarioLogueado");
-  if (guardado) mostrarApp(JSON.parse(guardado));
-  else $("#loginView").style.display = "block";
+  if (guardado) {
+    const user = JSON.parse(guardado);
+    mostrarApp(user);
+  } else {
+    $("#loginView").style.display = "block";
+  }
 
+  // Login submit
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const usuario = $("#usuario").value.trim();
     const password = $("#password").value.trim();
+
     const user = intentarLogin(usuario, password);
     if (user) {
       loginError.textContent = "";
@@ -253,37 +188,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Logout
   btnLogout.addEventListener("click", (e) => {
     e.preventDefault();
     cerrarSesion();
   });
 
-  /*********** FORMULARIO QUIRÚRGICO ***********/
+  // ----------- Formulario quirúrgico -----------
   const form = $("#quirForm");
   const alerta = $("#alertaRespuesta");
   const fechaInput = $("#fecha");
+
   setFechaLimites(fechaInput);
 
+  // Validaciones
   $("#cedula").addEventListener("input", function () {
     const cedula = this.value;
-    if (cedula.length === 10 && /^\d{10}$/.test(cedula)) this.setCustomValidity("");
-    else this.setCustomValidity("La cédula debe tener 10 dígitos numéricos.");
+    if (cedula.length === 10 && /^\d{10}$/.test(cedula)) {
+      this.setCustomValidity("");
+    } else {
+      this.setCustomValidity("La cédula debe tener 10 dígitos numéricos.");
+    }
   });
 
   $("#hcl").addEventListener("input", function () {
     const hcl = this.value;
-    if (/^\d+$/.test(hcl)) this.setCustomValidity("");
-    else this.setCustomValidity("La historia clínica debe contener solo números.");
+    if (/^\d+$/.test(hcl)) {
+      this.setCustomValidity("");
+    } else {
+      this.setCustomValidity("La historia clínica debe contener solo números.");
+    }
   });
 
   fechaInput.addEventListener("change", function () {
     const fecha = new Date(this.value);
     const minDate = new Date(this.min);
     const maxDate = new Date(this.max);
-    if (fecha < minDate || fecha > maxDate) this.setCustomValidity("La fecha debe estar en el mes actual o siguiente.");
-    else this.setCustomValidity("");
+    if (fecha < minDate || fecha > maxDate) {
+      this.setCustomValidity("La fecha debe estar en el mes actual o siguiente.");
+    } else {
+      this.setCustomValidity("");
+    }
   });
 
+  // Envío al Google Form
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -309,7 +257,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const formBody = new URLSearchParams();
-    // --- Aquí va el mapeo con entry.xxxxxxx (tal cual tu segundo código) ---
     formBody.append('entry.487126253', dataObj.estado || '');
     formBody.append('entry.365267802_year', fechaYear || '');
     formBody.append('entry.365267802_month', fechaMonth || '');
@@ -346,7 +293,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     formBody.append('entry.1285987142', dataObj.observaciones || '');
     formBody.append('entry.1820166925', dataObj.tipo || '');
     formBody.append('entry.1776562404', dataObj.procedimientoRealizado || '');
-    formBody.append('entry.497081423', dataObj.priayudantecir || '');
+    formBody.append('entry.497081423', dataObj.priayudantecir || ''); 
     formBody.append('entry.2060304106', dataObj.ayudanteAnestesiologo || '');
     formBody.append('entry.84166006', dataObj.tipoAnestesia || '');
     formBody.append('entry.364278059', dataObj.instrumentista || '');
@@ -364,9 +311,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     formBody.append('entry.1752272102', dataObj.horaEntrega || '');
     formBody.append('entry.1707511039', dataObj.fechaEntrega || '');
     formBody.append('entry.1007786212', dataObj.segayudantecir || '');
-    formBody.append('entry.405214287', dataObj.priayudanteenf || '');
+    formBody.append('entry.405214287', dataObj.priayudanteenf || ''); 
     formBody.append('entry.754781265', dataObj.horaTraenParte || '');
-
+    
     try {
       alerta.classList.remove("alert-danger", "d-none", "alert-success");
       alerta.classList.add("alert-info");
@@ -387,15 +334,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       form.reset();
       form.classList.remove("was-validated");
-
-      mostrarTabla(); // refrescar registros
     } catch (err) {
+      console.warn("Advertencia: no-cors, no se puede verificar la respuesta del servidor:", err);
       alerta.classList.remove("alert-info", "d-none");
       alerta.classList.add("alert-success");
       alerta.textContent = "Datos enviados (modo no-cors).";
       form.reset();
       form.classList.remove("was-validated");
-      mostrarTabla();
     }
   });
 });

@@ -1,31 +1,93 @@
-body {
-    background: #e6f0f5;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #1a1a1a;
-  }
-  
-  h1 {
-    color: #065a82;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.12);
-  }
-  
-  form {
-    background: #ffffff;
-    padding: 30px 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(6, 90, 130, 0.2);
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  select[size] {
-    height: auto;
-  }
-  
-  #alertaRespuesta {
-    max-width: 900px;
-    margin: 0 auto;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  
+#welcomeBar {
+  display: none;
+}
+
+/* Ocultar app (formulario) hasta que haya login */
+#appView {
+  display: none;
+}
+
+/* Limitar ancho de los contenedores para mejor lectura */
+.container-narrow {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#tablaPacientes {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px; /* tamaño general de la letra */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Encabezados */
+#tablaPacientes thead tr {
+  background-color: #ff6f61 !important; /* Color que quieras, por ejemplo un rojo suave */
+  color: #ffffff !important;             /* Color del texto de los encabezados */
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+/* Filas alternadas */
+#tablaPacientes tbody tr:nth-child(odd) {
+background-color: #f9f9f9;
+}
+
+#tablaPacientes tbody tr:nth-child(even) {
+background-color: #ffffff;
+}
+
+/* Hover */
+#tablaPacientes tbody tr:hover {
+background-color: #d1e7ff; /* Azul claro al pasar mouse */
+transition: background-color 0.3s ease;
+}
+
+/* Celdas */
+#tablaPacientes th {
+  font-size: 13px; /* si quieres ligeramente más grande que los td */
+}
+#tablaPacientes td {
+padding: 12px 15px;
+border-bottom: 1px solid #e0e0e0;
+vertical-align: middle;  
+font-size: 12px;
+color: #333333;
+}
+
+/* Última fila borde inferior */
+#tablaPacientes tbody tr:last-child td {
+border-bottom: none;
+}
+
+/* Buscador */
+#buscador {
+max-width: 350px;
+margin-bottom: 15px;
+padding: 8px 12px;
+border-radius: 8px;
+border: 1px solid #ced4da;
+outline: none;
+font-size: 0.95rem;
+}
+
+/* Botones de paginación */
+.d-flex button {
+min-width: 100px;
+border-radius: 8px;
+border: 1px solid #4e73df;
+background-color: #4e73df;
+color: #ffffff;
+font-weight: 500;
+transition: all 0.2s ease;
+}
+
+.d-flex button:hover {
+background-color: #224abe;
+border-color: #224abe;
+cursor: pointer;
+}
