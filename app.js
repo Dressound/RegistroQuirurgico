@@ -292,7 +292,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     formBody.append('entry.1236994085', dataObj.diagnostico || '');
     formBody.append('entry.1285987142', dataObj.observaciones || '');
     formBody.append('entry.1820166925', dataObj.tipo || '');
-
+    formBody.append('entry.1776562404', dataObj.procedimientoRealizado || '');
+    formBody.append('entry.497081423', dataObj.priayudantecir || ''); 
+    formBody.append('entry.2060304106', dataObj.ayudanteAnestesiologo || '');
+    formBody.append('entry.84166006', dataObj.tipoAnestesia || '');
+    formBody.append('entry.364278059', dataObj.instrumentista || '');
+    formBody.append('entry.1683147629', dataObj.circulante || '');
+    formBody.append('entry.1151898401', dataObj.instrumentistaRecibe || '');
+    formBody.append('entry.705613535', dataObj.circulanteRecibe || '');
+    formBody.append('entry.1150100577', dataObj.canalizaPaciente || '');
+    formBody.append('entry.645393412', dataObj.recuperacion || '');
+    formBody.append('entry.927804697', dataObj.listaVerificacion || '');
+    formBody.append('entry.387616470', dataObj.profilaxis || '');
+    formBody.append('entry.564715053', dataObj.marcacionQuirurgica || '');
+    formBody.append('entry.1998975230', dataObj.pacienteBrazalete || '');
+    formBody.append('entry.417762088', dataObj.pacienteIdentificado || '');
+    formBody.append('entry.428608782', dataObj.suspendidoPor || '');
+    formBody.append('entry.1752272102', dataObj.horaEntrega || '');
+    formBody.append('entry.1707511039', dataObj.fechaEntrega || '');
+    formBody.append('entry.1007786212', dataObj.segayudantecir || '');
+    formBody.append('entry.405214287', dataObj.priayudanteenf || ''); 
+    formBody.append('entry.754781265', dataObj.horaTraenParte || '');
+    
     try {
       alerta.classList.remove("alert-danger", "d-none", "alert-success");
       alerta.classList.add("alert-info");
