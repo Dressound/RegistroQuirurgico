@@ -1,6 +1,6 @@
 [
-  { "usuario": "admin", "password": "12345", "nombre": "Admin. Andres Ruilova" },
-  { "usuario": "Vargas.Pamela", "password": "cirujano", "nombre": "Lic. Pamela Vargas" },
-  { "usuario": "yamilet", "password": "anestesia", "nombre": "Dra. Yamilet Pérez" },
-  { "usuario": "jhonny", "password": "enfermeria", "nombre": "Enf. Jhonny Rosero" }
+  { "usuario": "admin", "password": "12346", "nombre": "Admin. Andres Ruilova" },
+  { "usuario": "Vargas.Pamela", "password": "123456", "nombre": "Lic. Pamela Vargas" },
+  { "usuario": "yamilet", "password": "123456", "nombre": "Dra. Yamilet Pérez" },
+  { "usuario": "jhonny", "password": "123456", "nombre": "Enf. Jhonny Rosero" }
 ]
