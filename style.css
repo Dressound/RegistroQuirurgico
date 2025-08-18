@@ -91,3 +91,22 @@ background-color: #224abe;
 border-color: #224abe;
 cursor: pointer;
 }
+
+#estadisticasView h2 {
+  color: #065a82;
+  margin-bottom: 20px;
+}
+/* gRAFICOS ESTADISTICOS */
+/* Contenedor de gráficos uniforme */
+.chart-container {
+  width: 280px;       /* ancho fijo */
+  height: 200px;      /* alto fijo */
+  margin-bottom: 100px;
+  display: inline-block; /* para que estén lado a lado si quieres */
+}
+
+/* Canvas dentro del contenedor siempre ocupa el tamaño del contenedor */
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

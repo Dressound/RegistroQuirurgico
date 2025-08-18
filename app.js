@@ -215,6 +215,76 @@ function renderizarTabla() {
   $("#pageInfo").textContent = `Página ${currentPage} de ${totalPages || 1}`;
 }
 
+let chartProcedimientos = null;
+let chartSexo = null;
+
+function generarEstadisticas(fechaFiltro = "") {
+  // Filtrar datos
+  let datos = pacientesRegistrados;
+  if (fechaFiltro) {
+    datos = datos.filter(p => p[2] === fechaFiltro); // columna 2 = fecha
+  }
+
+  // Contar Procedimientos y Sexo
+  const contProcedimientos = {};
+  const contSexo = {};
+
+  datos.forEach(p => {
+    const tipo = p[13] || "Desconocido"; // Procedimiento Realizado
+    const sexo = p[4] || "Desconocido";  // Sexo
+    contProcedimientos[tipo] = (contProcedimientos[tipo] || 0) + 1;
+    contSexo[sexo] = (contSexo[sexo] || 0) + 1;
+  });
+
+  const tipos = Object.keys(contProcedimientos);
+  const cantidades = Object.values(contProcedimientos);
+
+  const sexos = Object.keys(contSexo);
+  const cantidadesSexo = Object.values(contSexo);
+
+  // Destruir gráficos anteriores si existen
+  if (chartProcedimientos) chartProcedimientos.destroy();
+  if (chartSexo) chartSexo.destroy();
+
+  // Gráfico de Procedimientos
+  const ctxProc = document.getElementById("graficoProcedimientos").getContext("2d");
+  chartProcedimientos = new Chart(ctxProc, {
+    type: 'bar',
+    data: {
+      labels: tipos,
+      datasets: [{
+        label: 'Cantidad de Procedimientos',
+        data: cantidades,
+        backgroundColor: '#17a2b8'
+      }]
+    },
+    options: {
+      responsive: false,          // desactiva auto ajuste
+      maintainAspectRatio: false, // respetar tamaño del contenedor
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Gráfico de Sexo
+  const ctxSexo = document.getElementById("graficoSexo").getContext("2d");
+  chartSexo = new Chart(ctxSexo, {
+    type: 'pie',
+    data: {
+      labels: sexos,
+      datasets: [{
+        label: 'Sexo de Pacientes',
+        data: cantidadesSexo,
+        backgroundColor: ['#007bff', '#dc3545', '#6c757d']
+      }]
+    },
+    options: {
+      responsive: false,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+
 function cambiarPagina(offset) {
   currentPage += offset;
   renderizarTabla();
@@ -224,14 +294,48 @@ function cambiarPagina(offset) {
  * INICIO
  ******************************************************/
 document.addEventListener("DOMContentLoaded", async () => {
+
+  // Botón “Estadísticas”
+  $("#btnEstadisticas").addEventListener("click", () => {
+    $("#tablaView").style.display = "none";
+    $("#formularioView").style.display = "none";
+    $("#estadisticasView").style.display = "block";
+  
+    // Generar gráficos con la fecha que esté seleccionada (vacía = todo)
+    const fecha = $("#fechaFiltro").value;
+    generarEstadisticas(fecha);
+  });
+
+// Filtro de fecha
+$("#fechaFiltro").addEventListener("change", (e) => {
+  generarEstadisticas(e.target.value);
+});
+
   const loginForm = $("#loginForm");
   const loginError = $("#loginError");
   const btnLogout = $("#btnLogout");
 
-  $("#btnFormulario")?.addEventListener("click", mostrarFormulario);
-  $("#btnRegistros")?.addEventListener("click", mostrarTabla);
-  $("#prevPage")?.addEventListener("click", () => cambiarPagina(-1));
-  $("#nextPage")?.addEventListener("click", () => cambiarPagina(1));
+  $("#btnFormulario").addEventListener("click", () => {
+    $("#formularioView").style.display = "block";
+    $("#tablaView").style.display = "none";
+    $("#estadisticasView").style.display = "none";
+  });
+  
+  $("#btnRegistros").addEventListener("click", () => {
+    $("#formularioView").style.display = "none";
+    $("#tablaView").style.display = "block";
+    $("#estadisticasView").style.display = "none";
+    cargarCSV();
+  });
+  
+  $("#btnEstadisticas").addEventListener("click", () => {
+    $("#formularioView").style.display = "none";
+    $("#tablaView").style.display = "none";
+    $("#estadisticasView").style.display = "block";
+  
+    const fecha = $("#fechaFiltro").value;
+    generarEstadisticas(fecha);
+  });
   $("#buscador")?.addEventListener("input", () => renderizarTabla());
 
   await cargarUsuarios();
