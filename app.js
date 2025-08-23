@@ -55,8 +55,21 @@ function mostrarApp(user) {
   $("#welcomeText").innerHTML = `Bienvenid@, <b>${user.nombre}</b>`;
   $("#usuario_registro").value = user.nombre;
 
-  if (!opcionesCargadas) cargarOpciones();
-}
+    // Mostrar/Ocultar botones según rol
+    if (user.rol === "admin") {
+      $("#btnFormulario").style.display = "inline-block";
+      $("#btnRegistros").style.display = "inline-block";
+      $("#btnEstadisticas").style.display = "inline-block";
+    } else if (user.rol === "usuario") {
+      $("#btnFormulario").style.display = "inline-block";
+      $("#btnRegistros").style.display = "inline-block";
+      $("#btnEstadisticas").style.display = "inline-block";
+    }
+  
+    $("#usuario_registro").value = user.nombre;
+  
+    if (!opcionesCargadas) cargarOpciones();
+  }
 
 function cerrarSesion() {
   sessionStorage.removeItem("usuarioLogueado");
@@ -395,6 +408,7 @@ await cargarTraducciones();
 
   // Botón “Estadísticas”
   $("#btnEstadisticas").addEventListener("click", () => {
+    if (usuarioLogueado.rol !== "admin") return alert("No tienes permisos para ver estadísticas");
     $("#tablaView").style.display = "none";
     $("#formularioView").style.display = "none";
     $("#estadisticasView").style.display = "block";
