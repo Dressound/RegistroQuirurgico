@@ -1,112 +1,82 @@
-#welcomeBar {
-  display: none;
+#tituloRegistro {
+  font-size: 24px;      /* más pequeño que h1 */
+  line-height: 1;     /* menor espacio entre líneas */
+  margin-bottom: 10px;  /* reducir margen inferior */
+  letter-spacing: 1px;  /* opcional, para estética */
 }
 
-/* Ocultar app (formulario) hasta que haya login */
-#appView {
-  display: none;
+    /* Barra superior (bienvenida + logout) */
+    #welcomeBar {
+      display: none;
+    }
+
+    /* Ocultar app (formulario) hasta que haya login */
+    #appView {
+      display: none;
+    }
+
+    /* Limitar ancho de los contenedores para mejor lectura */
+    .container-narrow {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+/* Hover en fila: sobrescribe Bootstrap */
+#tablaPacientes.table-hover tbody tr:hover td {
+  background-color: #ffe066 !important; /* amarillo fuerte */
+  color: #000 !important;               /* texto negro */
+  transition: background-color 0.25s ease-in-out;
 }
 
-/* Limitar ancho de los contenedores para mejor lectura */
-.container-narrow {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-#tablaPacientes {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 13px; /* tamaño general de la letra */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+/* Contenedor de la tabla con scroll */
+.tabla-contenedor {
+  max-height: 400px;        /* altura visible */
+  overflow-y: auto;         /* scroll vertical */
+  overflow-x: auto;         /* scroll horizontal si la tabla es muy ancha */
   border-radius: 8px;
-  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 5px;             /* opcional, para que no toque los bordes */
+  background-color: #fff;   /* evita que se vea raro con scroll */
 }
 
-/* Encabezados */
-#tablaPacientes thead tr {
-  background-color: #ff6f61 !important; /* Color que quieras, por ejemplo un rojo suave */
-  color: #ffffff !important;             /* Color del texto de los encabezados */
-  font-weight: 600;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-/* Filas alternadas */
-#tablaPacientes tbody tr:nth-child(odd) {
-background-color: #f9f9f9;
-}
-
-#tablaPacientes tbody tr:nth-child(even) {
-background-color: #ffffff;
-}
-
-/* Hover */
-#tablaPacientes tbody tr:hover {
-background-color: #d1e7ff; /* Azul claro al pasar mouse */
-transition: background-color 0.3s ease;
+/* Tabla */
+#tablaPacientes {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 14px;
 }
 
 /* Celdas */
 #tablaPacientes th {
-  font-size: 13px; /* si quieres ligeramente más grande que los td */
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 150px;
+  text-align: center;
+  line-height: 1.2;
+  padding: 10px;
 }
 #tablaPacientes td {
-padding: 12px 15px;
-border-bottom: 1px solid #e0e0e0;
-vertical-align: middle;  
-font-size: 12px;
-color: #333333;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  min-width: 120px;
 }
 
-/* Última fila borde inferior */
-#tablaPacientes tbody tr:last-child td {
-border-bottom: none;
+/* Encabezado fijo */
+#tablaPacientes thead th {
+  position: sticky;
+  top: 0;
+  background-color: #0056b3; /* azul intenso */
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Buscador */
-#buscador {
-max-width: 350px;
-margin-bottom: 15px;
-padding: 8px 12px;
-border-radius: 8px;
-border: 1px solid #ced4da;
-outline: none;
-font-size: 0.95rem;
-}
-
-/* Botones de paginación */
-.d-flex button {
-min-width: 100px;
-border-radius: 8px;
-border: 1px solid #4e73df;
-background-color: #4e73df;
-color: #ffffff;
-font-weight: 500;
-transition: all 0.2s ease;
-}
-
-.d-flex button:hover {
-background-color: #224abe;
-border-color: #224abe;
-cursor: pointer;
-}
-
-#estadisticasView h2 {
-  color: #065a82;
-  margin-bottom: 20px;
-}
-/* gRAFICOS ESTADISTICOS */
-/* Contenedor de gráficos uniforme */
-.chart-container {
-  width: 280px;       /* ancho fijo */
-  height: 200px;      /* alto fijo */
-  margin-bottom: 100px;
-  display: inline-block; /* para que estén lado a lado si quieres */
-}
-
-/* Canvas dentro del contenedor siempre ocupa el tamaño del contenedor */
-.chart-container canvas {
-  width: 100% !important;
-  height: 100% !important;
+/* Filas alternadas */
+#tablaPacientes tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
 }

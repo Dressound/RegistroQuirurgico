@@ -14,7 +14,23 @@ let opcionesCargadas = false;
 let choicesIniciados = false;
 let pacientesRegistrados = [];
 let currentPage = 1;
-const rowsPerPage = 5;
+const rowsPerPage = 50;
+let camposCSV = [];
+
+
+$("#prevPage")?.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderizarTabla();
+  }
+});
+
+$("#nextPage")?.addEventListener("click", () => {
+  if (currentPage < Math.ceil(pacientesRegistrados.length / rowsPerPage)) {
+    currentPage++;
+    renderizarTabla();
+  }
+});
 
 /******************************************************
  * UTILIDADES
@@ -160,38 +176,108 @@ function mostrarTabla() {
   cargarCSV();
 }
 
+//TRADUCCION DE VALORES EN LA TABLA A MOSTRAR REGISTROS
+let traducciones = {};
+
+async function cargarTraducciones() {
+  try {
+    // Cargar traducciones generales
+    const data = await fetch('traducciones.json').then(res => res.json());
+    for (let key in data) {
+      const normalizedKey = key.toLowerCase().replace(/\s+/g, '');
+      traducciones[normalizedKey] = data[key];
+    }
+
+    // Cargar enfermeros
+    const enfermeros = await fetch('enfermeros.json').then(res => res.json());
+    traducciones['enfermero'] = {};
+    enfermeros.forEach(e => {
+      traducciones['enfermero'][e.codigo] = e.descripcion;
+    });
+
+    // Cargar anastesiologos
+    const anestesiologos = await fetch('anestesiologos.json').then(res => res.json());
+    traducciones['anestesiologo'] = {};
+    anestesiologos.forEach(e => {
+      traducciones['anestesiologo'][e.codigo] = e.descripcion;
+    });
+
+    // Cargar Cirujanos
+    const cirujanos = await fetch('cirujanos.json').then(res => res.json());
+    traducciones['cirujanoprincipal'] = {};
+    cirujanos.forEach(e => {
+      traducciones['cirujanoprincipal'][e.codigo] = e.descripcion;
+    });
+
+    console.log("Traducciones cargadas:", traducciones);
+
+  } catch (err) {
+    console.error("Error cargando traducciones o enfermeros:", err);
+  }
+}
+
+
+
+function valorLegible(campo, valor) {
+  if (traducciones[campo] && traducciones[campo][valor] !== undefined) {
+    return traducciones[campo][valor];
+  }
+  return valor; // si no hay traducción, deja el código
+}
+///////////////////////////
+
 function cargarCSV() {
+  function generarEncabezados() {
+    if (pacientesRegistrados.length === 0) return;
+  
+    const thead = document.querySelector("#tablaPacientes thead");
+    thead.innerHTML = ""; // Limpiar cualquier encabezado previo
+  
+    const tr = document.createElement("tr");
+    Object.keys(pacientesRegistrados[0]).forEach(campo => {
+      const th = document.createElement("th");
+      // Normalizamos o traducimos el nombre de la columna si quieres
+      th.textContent = campo; 
+      th.classList.add("encabezadoTabla"); // clase CSS
+      tr.appendChild(th);
+    });
+  
+    thead.appendChild(tr);
+  }
+  
+
+
+
   Papa.parse(CSV_URL, {
     download: true,
-    header: false, // seguimos leyendo todo como datos
+    header: true, // cada fila es un objeto
+    skipEmptyLines: true,
     complete: function(results) {
-      if (results.data.length === 0) return;
+      // Filtrar filas vacías
+      pacientesRegistrados = results.data.filter(row => Object.values(row).some(val => val.trim() !== ""));
+      if (pacientesRegistrados.length === 0) return;
 
-      // Guardar la primera fila como encabezados
-      const encabezados = results.data[0];
-      pacientesRegistrados = results.data.slice(1); // resto de filas como pacientes
+      // Guardar campos para traducciones
+      camposCSV = Object.keys(pacientesRegistrados[0]).map(h => h.toLowerCase().replace(/\s+/g,''));
 
-      // Limpiar encabezados actuales
-      const thead = $("#tablaPacientes thead tr#encabezados");
-      thead.innerHTML = "";
-      encabezados.forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        th.style.backgroundColor = "#065a82"; // color de fondo encabezado
-        th.style.color = "#ffffff";           // color de texto
-        th.style.padding = "8px";
-        thead.appendChild(th);
-      });
-
+      generarEncabezados();
       renderizarTabla();
+    },
+    
+    error: function(err) {
+      console.error("Error cargando CSV:", err);
     }
   });
+
 }
 
 function renderizarTabla() {
   const tbody = $("#tablaPacientes tbody");
   const buscador = $("#buscador").value.toLowerCase();
-  const filtered = pacientesRegistrados.filter(p => Object.values(p).join(" ").toLowerCase().includes(buscador));
+
+  const filtered = pacientesRegistrados.filter(p =>
+    Object.values(p).join(" ").toLowerCase().includes(buscador)
+  );
 
   const totalPages = Math.ceil(filtered.length / rowsPerPage);
   if (currentPage > totalPages) currentPage = totalPages || 1;
@@ -201,19 +287,27 @@ function renderizarTabla() {
   const pageItems = filtered.slice(start, end);
 
   tbody.innerHTML = "";
+
   pageItems.forEach(row => {
     const tr = document.createElement("tr");
-    row.forEach(val => {  // cada fila es un array de valores
+
+    Object.entries(row).forEach(([campo, val]) => {
       const td = document.createElement("td");
-      td.textContent = val;
+    
+       // Normalizamos el nombre de la columna para buscar la traducción
+      const campoKey = campo.toLowerCase().replace(/\s+/g,''); 
+      td.textContent = valorLegible(campoKey, val); // aquí se aplica la traducción
+    
       td.style.padding = "6px";
       tr.appendChild(td);
     });
+
     tbody.appendChild(tr);
   });
 
   $("#pageInfo").textContent = `Página ${currentPage} de ${totalPages || 1}`;
 }
+
 
 let chartProcedimientos = null;
 let chartSexo = null;
@@ -295,6 +389,10 @@ function cambiarPagina(offset) {
  ******************************************************/
 document.addEventListener("DOMContentLoaded", async () => {
 
+// Llama a esta función antes de mostrar la tabla
+await cargarTraducciones();
+///////////////
+
   // Botón “Estadísticas”
   $("#btnEstadisticas").addEventListener("click", () => {
     $("#tablaView").style.display = "none";
@@ -328,14 +426,6 @@ $("#fechaFiltro").addEventListener("change", (e) => {
     cargarCSV();
   });
   
-  $("#btnEstadisticas").addEventListener("click", () => {
-    $("#formularioView").style.display = "none";
-    $("#tablaView").style.display = "none";
-    $("#estadisticasView").style.display = "block";
-  
-    const fecha = $("#fechaFiltro").value;
-    generarEstadisticas(fecha);
-  });
   $("#buscador")?.addEventListener("input", () => renderizarTabla());
 
   await cargarUsuarios();
@@ -414,6 +504,8 @@ $("#fechaFiltro").addEventListener("change", (e) => {
 
     const formBody = new URLSearchParams();
     // --- Aquí va el mapeo con entry.xxxxxxx (tal cual tu segundo código) ---
+    
+    formBody.append('entry.1072257536', dataObj.usuario_registro || '');
     formBody.append('entry.487126253', dataObj.estado || '');
     formBody.append('entry.365267802_year', fechaYear || '');
     formBody.append('entry.365267802_month', fechaMonth || '');
@@ -471,6 +563,7 @@ $("#fechaFiltro").addEventListener("change", (e) => {
     formBody.append('entry.405214287', dataObj.priayudanteenf || '');
     formBody.append('entry.754781265', dataObj.horaTraenParte || '');
 
+
     try {
       alerta.classList.remove("alert-danger", "d-none", "alert-success");
       alerta.classList.add("alert-info");
@@ -494,12 +587,10 @@ $("#fechaFiltro").addEventListener("change", (e) => {
 
       mostrarTabla(); // refrescar registros
     } catch (err) {
+      console.error(err);
       alerta.classList.remove("alert-info", "d-none");
-      alerta.classList.add("alert-success");
-      alerta.textContent = "Datos enviados (modo no-cors).";
-      form.reset();
-      form.classList.remove("was-validated");
-      mostrarTabla();
+      alerta.classList.add("alert-danger");
+      alerta.textContent = "Error enviando los datos. Revisa la conexión.";
     }
   });
 });

@@ -1,0 +1,36 @@
+{
+    "estado": {
+      "1": "REALIZADO",
+      "2": "SUSPENDIDO",
+      "3": "FALLECIDO",
+      "CORRECCION": "CORRECCIÓN"
+    },
+    "tipo": {
+      "1": "EMERGENCIA",
+      "2": "PROGRAMADA"
+    },
+    "sexo": {
+      "1": "MASCULINO",
+      "2": "FEMENINO"
+    },
+    "qx": { "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8" },
+    "canalizaPaciente": { "1": "SI", "2": "NO" },
+    "recuperacion": {
+      "1": "RECUPERACION",
+      "2": "HOSPITAL DEL DIA",
+      "3": "UCI PEDIATRICA",
+      "4": "UCI SALA A",
+      "5": "UCI SALA B",
+      "6": "UCI SALA C",
+      "7": "CUIDADOS INTERMEDIOS",
+      "8": "UCI NEO"
+    },
+    "listaVerificacion": { "1": "SI", "2": "NO" },
+    "profilaxis": { "1": "SI", "2": "NO" },
+    "marcacionQuirurgica": { "1": "SI", "2": "NO" },
+    "pacienteBrazalete": { "1": "SI", "2": "NO" },
+    "pacienteIdentificado": { "1": "SI", "2": "NO" },
+    "suspendidoPor": { "1": "CAUSA MEDICA", "2": "CAUSA NO MEDICA" },
+    "tipoAnestesia": { "1": "LOCAL SEDACION", "2": "BLOQUEO + SEDACION", "3": "RAQUIDEA", "4": "GENERAL" }
+  }
+  

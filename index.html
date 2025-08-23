@@ -14,24 +14,6 @@
   <!-- Choices.js CSS para selects mejorados -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 
-  <!-- Estilos personalizados -->
-  <style>
-    /* Barra superior (bienvenida + logout) */
-    #welcomeBar {
-      display: none;
-    }
-
-    /* Ocultar app (formulario) hasta que haya login */
-    #appView {
-      display: none;
-    }
-
-    /* Limitar ancho de los contenedores para mejor lectura */
-    .container-narrow {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-  </style>
 </head>
 
 <body>
@@ -79,15 +61,13 @@
         <button id="btnLogout" class="btn btn-sm btn-outline-danger">Cerrar sesión</button>
       </div>
     </div>
-
     <!-- Contenedor principal -->
-    <div class="container container-narrow py-5">
-      <h1 class="mb-4 text-center fw-bold">REGISTRO CENTRO QUIRÚRGICO</h1>
-
+    <div class="container container-narrow py-3">
+      <h2 id="tituloRegistro" class="text-center fw-bold">REGISTRO CENTRO QUIRÚRGICO</h2>
       <!-- =========================
            Botones de navegación
            ========================= -->
-      <div class="mb-3">
+      <div class="mb-2">
         <button id="btnFormulario" class="btn btn-primary">Nuevo Registro</button>
         <button id="btnRegistros" class="btn btn-secondary">Registros Guardados</button>
         <button id="btnEstadisticas" class="btn btn-info">Estadísticas</button>
@@ -162,7 +142,7 @@
                   <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
                 </div>
   
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="especialidad" class="form-label">ESPECIALIDAD</label>
                   <select class="form-select" id="especialidad" name="especialidad" required>
                     <option value="" selected disabled>Seleccione...</option>
@@ -576,18 +556,20 @@
            Vista: Registros guardados
            ========================= -->
       <div id="tablaView" style="display:none;">
-        <h2>Pacientes Registrados</h2>
+        <h3>Pacientes Registrados</h3>
 
         <!-- Buscador -->
         <input type="text" id="buscador" class="form-control mb-2" placeholder="Buscar paciente...">
 
         <!-- Tabla -->
-        <table id="tablaPacientes" class="table table-striped table-bordered">
+        <div class="tabla-contenedor">
+        <table id="tablaPacientes" class="table table-striped table-bordered table-hover">
           <thead>
             <tr id="encabezados"></tr>
           </thead>
           <tbody></tbody>
         </table>
+      </div>
 
         <!-- Controles de paginación -->
         <div class="d-flex justify-content-between align-items-center">
