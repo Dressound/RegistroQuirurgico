@@ -52,7 +52,7 @@ function mostrarApp(user) {
   $("#loginView").style.display = "none";
   $("#appView").style.display = "block";
   $("#welcomeBar").style.display = "block";
-  $("#welcomeText").innerHTML = `Bienvenido, <b>${user.nombre}</b>`;
+  $("#welcomeText").innerHTML = `Bienvenid@, <b>${user.nombre}</b>`;
   $("#usuario_registro").value = user.nombre;
 
   if (!opcionesCargadas) cargarOpciones();

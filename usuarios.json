@@ -1,5 +1,5 @@
 [
-  { "usuario": "admin", "password": "12346", "nombre": "Admin. Andres Ruilova" },
+  { "usuario": "Andres.ruilova", "password": "12346", "nombre": "Admin. Andres Ruilova" },
   { "usuario": "Vargas.Pamela", "password": "123456", "nombre": "Lic. Pamela Vargas" },
   { "usuario": "Jesica.Alvarez", "password": "123456", "nombre": "Dra. Jesica Alvarez" },
   { "usuario": "jhonny", "password": "123456", "nombre": "Enf. Jhonny Rosero" }
