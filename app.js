@@ -25,6 +25,12 @@ $("#prevPage")?.addEventListener("click", () => {
   }
 });
 
+$("#btnActualizar")?.addEventListener("click", () => {
+  // Agregar parámetro aleatorio para evitar cache
+  const urlConNoCache = CSV_URL + "?nocache=" + new Date().getTime();
+  cargarCSV(urlConNoCache);
+});
+
 $("#nextPage")?.addEventListener("click", () => {
   if (currentPage < Math.ceil(pacientesRegistrados.length / rowsPerPage)) {
     currentPage++;
@@ -401,6 +407,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Cargar CSV y traducciones en paralelo
   await Promise.all([cargarTraducciones(), cargarCSV()]);
 
+
+// Auto-refresh cada minuto
+setInterval(() => {
+  const urlConNoCache = CSV_URL + "?nocache=" + new Date().getTime();
+  cargarCSV(urlConNoCache);
+}, 30000);
+
+
   // Botón “Estadísticas”
   $("#btnEstadisticas").addEventListener("click", () => {
     if (usuarioLogueado.rol !== "admin") {
@@ -599,14 +613,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       alerta.classList.add("alert-info");
       alerta.textContent = "Guardando... por favor espere";
 
-      const formBody = generarFormBody(mapping, dataObj);
+const formBody = generarFormBody(mapping, dataObj);
 
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formBody,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        mode: "no-cors"
-      });
+await fetch(SCRIPT_URL, {
+  method: "POST",
+  body: formBody,
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  mode: "no-cors"
+});
 
       await new Promise(resolve => setTimeout(resolve, 900));
 
