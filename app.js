@@ -37,6 +37,15 @@ $("#nextPage")?.addEventListener("click", () => {
  ******************************************************/
 function $(selector) { return document.querySelector(selector); }
 function $all(selector) { return Array.from(document.querySelectorAll(selector)); }
+
+function debounce(fn, delay = 200) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+
 function mostrarMensajePermiso(texto) {
   const mensaje = document.getElementById("mensajePermiso");
   mensaje.textContent = texto;
@@ -60,21 +69,15 @@ function mostrarApp(user) {
   $("#welcomeText").innerHTML = `Bienvenid@, <b>${user.nombre}</b>`;
   $("#usuario_registro").value = user.nombre;
 
-    // Mostrar/Ocultar botones según rol
-    if (user.rol === "admin") {
-      $("#btnFormulario").style.display = "inline-block";
-      $("#btnRegistros").style.display = "inline-block";
-      $("#btnEstadisticas").style.display = "inline-block";
-    } else if (user.rol === "usuario") {
-      $("#btnFormulario").style.display = "inline-block";
-      $("#btnRegistros").style.display = "inline-block";
-      $("#btnEstadisticas").style.display = "inline-block";
-    }
-  
-    $("#usuario_registro").value = user.nombre;
-  
-    if (!opcionesCargadas) cargarOpciones();
-  }
+  // Mostrar/Ocultar botones según rol
+  // Mostrar botones según rol
+  const botones = ["#btnFormulario", "#btnRegistros", "#btnEstadisticas"];
+  botones.forEach(id => $(id).style.display = "inline-block");
+
+  $("#usuario_registro").value = user.nombre;
+
+  if (!opcionesCargadas) cargarOpciones();
+}
 
 function cerrarSesion() {
   sessionStorage.removeItem("usuarioLogueado");
@@ -106,6 +109,7 @@ async function cargarUsuarios() {
  ******************************************************/
 async function cargarOpciones() {
   try {
+    // Cargar todos los JSON en paralelo
     const [cirujanos, enfermeros, anestesiologos, diagnosticos] = await Promise.all([
       fetch('cirujanos.json').then(res => res.json()),
       fetch('enfermeros.json').then(res => res.json()),
@@ -113,48 +117,50 @@ async function cargarOpciones() {
       fetch('diagnosticos.json').then(res => res.json())
     ]);
 
-    llenarSelectConId('medico_cirujano', cirujanos);
-    llenarSelectConId('enfermero', enfermeros);
-    llenarSelectConId('anestesiologo', anestesiologos);
-    llenarSelectDiagnosticos('diagnostico', diagnosticos);
+    // Llenar selects con depuración
+    llenarSelect('medico_cirujano', cirujanos);
+    llenarSelect('enfermero', enfermeros);
+    llenarSelect('anestesiologo', anestesiologos);
+    llenarSelect('diagnostico', diagnosticos, true); // true = mostrar código
 
+    // Inicializar Choices SOLO si los selects existen
     if (!choicesIniciados) {
       inicializarChoices();
       choicesIniciados = true;
     }
+
     opcionesCargadas = true;
+    console.log("Opciones cargadas correctamente.");
   } catch (err) {
     console.error("Error al cargar opciones:", err);
   }
 }
 
-function llenarSelectConId(id, lista) {
+function llenarSelect(id, lista, mostrarCodigo = false) {
   const select = document.getElementById(id);
-  const firstOption = select.querySelector('option[value=""]');
+  if (!select) return console.error("Select no encontrado:", id);
+
+  // Limpiar opciones existentes
   select.innerHTML = "";
+
+  // Si existe opción vacía, mantenerla
+  const firstOption = select.querySelector('option[value=""]');
   if (firstOption) select.appendChild(firstOption);
 
+  // Agregar opciones
   lista.forEach(item => {
-    const option = document.createElement('option');
+    // Validar que existan los campos esperados
+    if (!item.codigo || !item.descripcion) {
+      console.warn("Item inválido en JSON:", item);
+      return;
+    }
+    const option = document.createElement("option");
     option.value = item.codigo;
-    option.textContent = item.descripcion;
+    option.textContent = mostrarCodigo ? `${item.codigo} - ${item.descripcion}` : item.descripcion;
     select.appendChild(option);
   });
 }
 
-function llenarSelectDiagnosticos(id, lista) {
-  const select = document.getElementById(id);
-  const firstOption = select.querySelector('option[value=""]');
-  select.innerHTML = "";
-  if (firstOption) select.appendChild(firstOption);
-
-  lista.forEach(item => {
-    const option = document.createElement('option');
-    option.value = item.codigo;
-    option.textContent = `${item.codigo} - ${item.descripcion}`;
-    select.appendChild(option);
-  });
-}
 
 function inicializarChoices() {
   const selects = $all('select:not([size])');
@@ -200,33 +206,19 @@ let traducciones = {};
 async function cargarTraducciones() {
   try {
     // Cargar traducciones generales
-    const data = await fetch('traducciones.json').then(res => res.json());
-    for (let key in data) {
-      const normalizedKey = key.toLowerCase().replace(/\s+/g, '');
-      traducciones[normalizedKey] = data[key];
-    }
+    const [data, enfermeros, anestesiologos, cirujanos] = await Promise.all([
+      fetch('traducciones.json').then(r => r.json()),
+      fetch('enfermeros.json').then(r => r.json()),
+      fetch('anestesiologos.json').then(r => r.json()),
+      fetch('cirujanos.json').then(r => r.json())
+    ]);
 
-    // Cargar enfermeros
-    const enfermeros = await fetch('enfermeros.json').then(res => res.json());
-    traducciones['enfermero'] = {};
-    enfermeros.forEach(e => {
-      traducciones['enfermero'][e.codigo] = e.descripcion;
-    });
-
-    // Cargar anastesiologos
-    const anestesiologos = await fetch('anestesiologos.json').then(res => res.json());
-    traducciones['anestesiologo'] = {};
-    anestesiologos.forEach(e => {
-      traducciones['anestesiologo'][e.codigo] = e.descripcion;
-    });
-
-    // Cargar Cirujanos
-    const cirujanos = await fetch('cirujanos.json').then(res => res.json());
-    traducciones['cirujanoprincipal'] = {};
-    cirujanos.forEach(e => {
-      traducciones['cirujanoprincipal'][e.codigo] = e.descripcion;
-    });
-
+    traducciones = Object.fromEntries(
+      Object.entries(data).map(([k, v]) => [k.toLowerCase().replace(/\s+/g, ''), v])
+    );
+    traducciones.enfermero = Object.fromEntries(enfermeros.map(e => [e.codigo, e.descripcion]));
+    traducciones.anestesiologo = Object.fromEntries(anestesiologos.map(e => [e.codigo, e.descripcion]));
+    traducciones.cirujanoprincipal = Object.fromEntries(cirujanos.map(e => [e.codigo, e.descripcion]));
     console.log("Traducciones cargadas:", traducciones);
 
   } catch (err) {
@@ -234,55 +226,55 @@ async function cargarTraducciones() {
   }
 }
 
-
-
 function valorLegible(campo, valor) {
-  if (traducciones[campo] && traducciones[campo][valor] !== undefined) {
-    return traducciones[campo][valor];
+  if (!valor) return valor;
+
+  const cleanVal = String(valor).trim(); // limpiar espacios
+  if (traducciones[campo] && traducciones[campo][cleanVal] !== undefined) {
+    return traducciones[campo][cleanVal];
   }
-  return valor; // si no hay traducción, deja el código
+  return valor; // si no hay traducción, deja el valor original
 }
 ///////////////////////////
 
 function cargarCSV() {
   function generarEncabezados() {
     if (pacientesRegistrados.length === 0) return;
-  
+
     const thead = document.querySelector("#tablaPacientes thead");
     thead.innerHTML = ""; // Limpiar cualquier encabezado previo
-  
+
     const tr = document.createElement("tr");
+    const columnasTraducidas = traducciones.columnas || {}; // <--- agrega esta línea
+
     Object.keys(pacientesRegistrados[0]).forEach(campo => {
       const th = document.createElement("th");
-      // Normalizamos o traducimos el nombre de la columna si quieres
-      th.textContent = campo; 
-      th.classList.add("encabezadoTabla"); // clase CSS
+      // Si existe traducción para el encabezado, usarla; si no, dejar el original
+      th.textContent = columnasTraducidas[campo] || campo;
+      th.classList.add("encabezadoTabla");
       tr.appendChild(th);
     });
-  
+
     thead.appendChild(tr);
   }
-  
-
-
 
   Papa.parse(CSV_URL, {
     download: true,
     header: true, // cada fila es un objeto
     skipEmptyLines: true,
-    complete: function(results) {
+    complete: function (results) {
       // Filtrar filas vacías
       pacientesRegistrados = results.data.filter(row => Object.values(row).some(val => val.trim() !== ""));
       if (pacientesRegistrados.length === 0) return;
 
       // Guardar campos para traducciones
-      camposCSV = Object.keys(pacientesRegistrados[0]).map(h => h.toLowerCase().replace(/\s+/g,''));
+      camposCSV = Object.keys(pacientesRegistrados[0]).map(h => h.toLowerCase().replace(/\s+/g, ''));
 
       generarEncabezados();
       renderizarTabla();
     },
-    
-    error: function(err) {
+
+    error: function (err) {
       console.error("Error cargando CSV:", err);
     }
   });
@@ -306,22 +298,21 @@ function renderizarTabla() {
 
   tbody.innerHTML = "";
 
+  // Ya solo renderiza la página actual
+  const fragment = document.createDocumentFragment();
   pageItems.forEach(row => {
     const tr = document.createElement("tr");
-
     Object.entries(row).forEach(([campo, val]) => {
       const td = document.createElement("td");
-    
-       // Normalizamos el nombre de la columna para buscar la traducción
-      const campoKey = campo.toLowerCase().replace(/\s+/g,''); 
-      td.textContent = valorLegible(campoKey, val); // aquí se aplica la traducción
-    
+      td.textContent = valorLegible(campo.toLowerCase().replace(/\s+/g, ''), val);
       td.style.padding = "6px";
       tr.appendChild(td);
     });
-
-    tbody.appendChild(tr);
+    fragment.appendChild(tr);
   });
+
+  tbody.innerHTML = "";
+  tbody.appendChild(fragment);
 
   $("#pageInfo").textContent = `Página ${currentPage} de ${totalPages || 1}`;
 }
@@ -407,9 +398,8 @@ function cambiarPagina(offset) {
  ******************************************************/
 document.addEventListener("DOMContentLoaded", async () => {
 
-// Llama a esta función antes de mostrar la tabla
-await cargarTraducciones();
-///////////////
+  // Cargar CSV y traducciones en paralelo
+  await Promise.all([cargarTraducciones(), cargarCSV()]);
 
   // Botón “Estadísticas”
   $("#btnEstadisticas").addEventListener("click", () => {
@@ -419,16 +409,16 @@ await cargarTraducciones();
     $("#tablaView").style.display = "none";
     $("#formularioView").style.display = "none";
     $("#estadisticasView").style.display = "block";
-  
+
     // Generar gráficos con la fecha que esté seleccionada (vacía = todo)
     const fecha = $("#fechaFiltro").value;
     generarEstadisticas(fecha);
   });
 
-// Filtro de fecha
-$("#fechaFiltro").addEventListener("change", (e) => {
-  generarEstadisticas(e.target.value);
-});
+  // Filtro de fecha
+  $("#fechaFiltro").addEventListener("change", (e) => {
+    generarEstadisticas(e.target.value);
+  });
 
   const loginForm = $("#loginForm");
   const loginError = $("#loginError");
@@ -439,15 +429,23 @@ $("#fechaFiltro").addEventListener("change", (e) => {
     $("#tablaView").style.display = "none";
     $("#estadisticasView").style.display = "none";
   });
-  
+
   $("#btnRegistros").addEventListener("click", () => {
     $("#formularioView").style.display = "none";
     $("#tablaView").style.display = "block";
     $("#estadisticasView").style.display = "none";
     cargarCSV();
   });
-  
-  $("#buscador")?.addEventListener("input", () => renderizarTabla());
+
+  function debounce(fn, delay) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...args), delay);
+    };
+  }
+
+  $("#buscador")?.addEventListener("input", debounce(() => renderizarTabla(), 200));
 
   await cargarUsuarios();
 
@@ -523,72 +521,85 @@ $("#fechaFiltro").addEventListener("change", (e) => {
       fechaYear = year; fechaMonth = month; fechaDay = day;
     }
 
-    const formBody = new URLSearchParams();
-    // --- Aquí va el mapeo con entry.xxxxxxx (tal cual tu segundo código) ---
-    
-    formBody.append('entry.1072257536', dataObj.usuario_registro || '');
-    formBody.append('entry.487126253', dataObj.estado || '');
-    formBody.append('entry.365267802_year', fechaYear || '');
-    formBody.append('entry.365267802_month', fechaMonth || '');
-    formBody.append('entry.365267802_day', fechaDay || '');
-    formBody.append('entry.129819069', dataObj.nombres || '');
-    formBody.append('entry.411420745', dataObj.sexo || '');
-    formBody.append('entry.2142979259', dataObj.edad || '');
-    formBody.append('entry.2104873773', dataObj.hcl || '');
-    formBody.append('entry.1351880325', dataObj.cedula || '');
-    formBody.append('entry.44199439', dataObj.especialidad || '');
-    formBody.append('entry.1988959802', dataObj.procedencia || '');
-    formBody.append('entry.51260872', dataObj.qx || '');
-    formBody.append('entry.1896317539', dataObj.hora_llamada_hospitalizado || '');
-    formBody.append('entry.1041618293', dataObj.hora_llamada_emergencia || '');
-    formBody.append('entry.1995690425', dataObj.hora_cirugia_programada || '');
-    formBody.append('entry.475374554', dataObj.hora_llegada_cqx || '');
-    formBody.append('entry.1726212408', dataObj.hora_entrada_quirofano || '');
-    formBody.append('entry.1981970497', dataObj.hora_llegada_anestesiologo || '');
-    formBody.append('entry.270921844', dataObj.hora_inicio_anestesia || '');
-    formBody.append('entry.526398815', dataObj.hora_fin_anestesia || '');
-    formBody.append('entry.1522781365', dataObj.hora_salida_anestesiologo || '');
-    formBody.append('entry.486157334', dataObj.hora_llegada_cirujano || '');
-    formBody.append('entry.188160866', dataObj.hora_inicio_cirujano || '');
-    formBody.append('entry.975478532', dataObj.hora_fin_cirujano || '');
-    formBody.append('entry.442187380', dataObj.hora_salida_cirujano || '');
-    formBody.append('entry.140140796', dataObj.hora_inicio_desinfeccion || '');
-    formBody.append('entry.566458365', dataObj.hora_fin_desinfeccion || '');
-    formBody.append('entry.701289561', dataObj.hora_inicio_limpieza || '');
-    formBody.append('entry.844668019', dataObj.hora_fin_limpieza || '');
-    formBody.append('entry.447555786', dataObj.medico_cirujano || '');
-    formBody.append('entry.1042485773', dataObj.enfermero || '');
-    formBody.append('entry.700782129', dataObj.anestesiologo || '');
-    formBody.append('entry.1236994085', dataObj.diagnostico || '');
-    formBody.append('entry.1285987142', dataObj.observaciones || '');
-    formBody.append('entry.1820166925', dataObj.tipo || '');
-    formBody.append('entry.1776562404', dataObj.procedimientoRealizado || '');
-    formBody.append('entry.497081423', dataObj.priayudantecir || '');
-    formBody.append('entry.2060304106', dataObj.ayudanteAnestesiologo || '');
-    formBody.append('entry.84166006', dataObj.tipoAnestesia || '');
-    formBody.append('entry.364278059', dataObj.instrumentista || '');
-    formBody.append('entry.1683147629', dataObj.circulante || '');
-    formBody.append('entry.1151898401', dataObj.instrumentistaRecibe || '');
-    formBody.append('entry.705613535', dataObj.circulanteRecibe || '');
-    formBody.append('entry.1150100577', dataObj.canalizaPaciente || '');
-    formBody.append('entry.645393412', dataObj.recuperacion || '');
-    formBody.append('entry.927804697', dataObj.listaVerificacion || '');
-    formBody.append('entry.387616470', dataObj.profilaxis || '');
-    formBody.append('entry.564715053', dataObj.marcacionQuirurgica || '');
-    formBody.append('entry.1998975230', dataObj.pacienteBrazalete || '');
-    formBody.append('entry.417762088', dataObj.pacienteIdentificado || '');
-    formBody.append('entry.428608782', dataObj.suspendidoPor || '');
-    formBody.append('entry.1752272102', dataObj.horaEntrega || '');
-    formBody.append('entry.1707511039', dataObj.fechaEntrega || '');
-    formBody.append('entry.1007786212', dataObj.segayudantecir || '');
-    formBody.append('entry.405214287', dataObj.priayudanteenf || '');
-    formBody.append('entry.754781265', dataObj.horaTraenParte || '');
+    const mapping = {
+      usuario_registro: 'entry.1072257536',
+      estado: 'entry.487126253',
+      fecha: { year: 'entry.365267802_year', month: 'entry.365267802_month', day: 'entry.365267802_day' },
+      nombres: 'entry.129819069',
+      sexo: 'entry.411420745',
+      edad: 'entry.2142979259',
+      hcl: 'entry.2104873773',
+      cedula: 'entry.1351880325',
+      especialidad: 'entry.44199439',
+      procedencia: 'entry.1988959802',
+      qx: 'entry.51260872',
+      hora_llamada_hospitalizado: 'entry.1896317539',
+      hora_llamada_emergencia: 'entry.1041618293',
+      hora_cirugia_programada: 'entry.1995690425',
+      hora_llegada_cqx: 'entry.475374554',
+      hora_entrada_quirofano: 'entry.1726212408',
+      hora_llegada_anestesiologo: 'entry.1981970497',
+      hora_inicio_anestesia: 'entry.270921844',
+      hora_fin_anestesia: 'entry.526398815',
+      hora_salida_anestesiologo: 'entry.1522781365',
+      hora_llegada_cirujano: 'entry.486157334',
+      hora_inicio_cirujano: 'entry.188160866',
+      hora_fin_cirujano: 'entry.975478532',
+      hora_salida_cirujano: 'entry.442187380',
+      hora_inicio_desinfeccion: 'entry.140140796',
+      hora_fin_desinfeccion: 'entry.566458365',
+      hora_inicio_limpieza: 'entry.701289561',
+      hora_fin_limpieza: 'entry.844668019',
+      medico_cirujano: 'entry.447555786',
+      enfermero: 'entry.1042485773',
+      anestesiologo: 'entry.700782129',
+      diagnostico: 'entry.1236994085',
+      observaciones: 'entry.1285987142',
+      tipo: 'entry.1820166925',
+      procedimientoRealizado: 'entry.1776562404',
+      priayudantecir: 'entry.497081423',
+      ayudanteAnestesiologo: 'entry.2060304106',
+      tipoAnestesia: 'entry.84166006',
+      instrumentista: 'entry.364278059',
+      circulante: 'entry.1683147629',
+      instrumentistaRecibe: 'entry.1151898401',
+      circulanteRecibe: 'entry.705613535',
+      canalizaPaciente: 'entry.1150100577',
+      recuperacion: 'entry.645393412',
+      listaVerificacion: 'entry.927804697',
+      profilaxis: 'entry.387616470',
+      marcacionQuirurgica: 'entry.564715053',
+      pacienteBrazalete: 'entry.1998975230',
+      pacienteIdentificado: 'entry.417762088',
+      suspendidoPor: 'entry.428608782',
+      horaEntrega: 'entry.1752272102',
+      fechaEntrega: 'entry.1707511039',
+      segayudantecir: 'entry.1007786212',
+      priayudanteenf: 'entry.405214287',
+      horaTraenParte: 'entry.754781265'
+    };
 
-
+    // Generar automáticamente formBody
+    function generarFormBody(mapping, dataObj) {
+      const formBody = new URLSearchParams();
+      for (let key in mapping) {
+        if (key === 'fecha' && dataObj.fecha) {
+          const [year, month, day] = dataObj.fecha.split("-");
+          formBody.append(mapping.fecha.year, year);
+          formBody.append(mapping.fecha.month, month);
+          formBody.append(mapping.fecha.day, day);
+        } else {
+          formBody.append(mapping[key], dataObj[key] || "");
+        }
+      }
+      return formBody;
+    }
     try {
       alerta.classList.remove("alert-danger", "d-none", "alert-success");
       alerta.classList.add("alert-info");
       alerta.textContent = "Guardando... por favor espere";
+
+      const formBody = generarFormBody(mapping, dataObj);
 
       await fetch(SCRIPT_URL, {
         method: "POST",
