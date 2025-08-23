@@ -37,7 +37,12 @@ $("#nextPage")?.addEventListener("click", () => {
  ******************************************************/
 function $(selector) { return document.querySelector(selector); }
 function $all(selector) { return Array.from(document.querySelectorAll(selector)); }
-
+function mostrarMensajePermiso(texto) {
+  const mensaje = document.getElementById("mensajePermiso");
+  mensaje.textContent = texto;
+  mensaje.classList.remove("d-none"); // mostrar mensaje
+  setTimeout(() => mensaje.classList.add("d-none"), 3000); // desaparecer después de 3s
+}
 /******************************************************
  * LOGIN
  ******************************************************/
@@ -408,7 +413,9 @@ await cargarTraducciones();
 
   // Botón “Estadísticas”
   $("#btnEstadisticas").addEventListener("click", () => {
-    if (usuarioLogueado.rol !== "admin") return alert("No tienes permisos para ver estadísticas");
+    if (usuarioLogueado.rol !== "admin") {
+      return mostrarMensajePermiso("No tienes permisos para ver estadísticas");
+    }
     $("#tablaView").style.display = "none";
     $("#formularioView").style.display = "none";
     $("#estadisticasView").style.display = "block";
