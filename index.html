@@ -71,10 +71,10 @@
         <button id="btnFormulario" class="btn btn-primary">Nuevo Registro</button>
         <button id="btnRegistros" class="btn btn-secondary">Registros Guardados</button>
         <button id="btnEstadisticas" class="btn btn-info">Estadísticas</button>
-        
+
       </div>
-<!-- Aquí agregamos el div para mensajes de permisos -->
-<div id="mensajePermiso" class="alert alert-warning d-none"></div>
+      <!-- Aquí agregamos el div para mensajes de permisos -->
+      <div id="mensajePermiso" class="alert alert-warning d-none"></div>
       <!-- =========================
            Vista: Formulario (completo)
            ========================= -->
@@ -99,13 +99,13 @@
                   </select>
                   <div class="invalid-feedback">Por favor seleccione un estado válido.</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="fecha" class="form-label">Fecha</label>
                   <input type="date" class="form-control" id="fecha" name="fecha" required min="" max="" />
                   <div class="invalid-feedback">Seleccione una fecha válida (mes actual o siguiente).</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="tipo" class="form-label">Tipo</label>
                   <select class="form-select" id="tipo" name="tipo" required>
@@ -115,13 +115,13 @@
                   </select>
                   <div class="invalid-feedback">Por favor seleccione un estado válido.</div>
                 </div>
-  
+
                 <div class="col-md-4">
                   <label for="nombres" class="form-label">Nombres y Apellidos</label>
                   <input type="text" class="form-control" id="nombres" name="nombres" required minlength="3" />
                   <div class="invalid-feedback">Por favor ingrese nombres y apellidos.</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="sexo" class="form-label">Sexo</label>
                   <select class="form-select" id="sexo" name="sexo" required>
@@ -131,19 +131,19 @@
                   </select>
                   <div class="invalid-feedback">Seleccione un sexo.</div>
                 </div>
-  
+
                 <div class="col-md-1">
                   <label for="edad" class="form-label">Edad</label>
                   <input type="number" min="0" max="130" class="form-control" id="edad" name="edad" required />
                   <div class="invalid-feedback">Ingrese una edad válida.</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hcl" class="form-label">Historia Clínica (HCL)</label>
                   <input type="text" class="form-control" id="hcl" name="hcl" pattern="\d+" required />
                   <div class="invalid-feedback">Ingrese un número de HCL válido.</div>
                 </div>
-  
+
                 <div class="col-md-3">
                   <label for="especialidad" class="form-label">ESPECIALIDAD</label>
                   <select class="form-select" id="especialidad" name="especialidad" required>
@@ -160,7 +160,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione una especialidad válida.</div>
                 </div>
-  
+
                 <div class="col-md-3">
                   <label for="procedencia" class="form-label">Procedencia</label>
                   <select class="form-select" id="procedencia" name="procedencia" required>
@@ -180,13 +180,13 @@
                   </select>
                   <div class="invalid-feedback">Seleccione una procedencia válida.</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="cedula" class="form-label">Cédula</label>
                   <input type="text" class="form-control" id="cedula" name="cedula" pattern="\d{10}" required />
                   <div class="invalid-feedback">Ingrese una cédula válida de 10 dígitos.</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="qx" class="form-label">QX</label>
                   <select class="form-select" id="qx" name="qx" required>
@@ -205,13 +205,13 @@
               </div>
             </div>
           </div>
-  
+
           <!-- CARD: Datos Cirujano -->
           <div class="card mb-4">
             <div class="card-header bg-secondary text-white fw-bold">Datos Cirujano</div>
             <div class="card-body">
               <div class="row g-3">
-  
+
                 <div class="col-md-4">
                   <label for="medico_cirujano" class="form-label">Médico Cirujano</label>
                   <select class="form-select" id="medico_cirujano" name="medico_cirujano" required>
@@ -219,7 +219,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione un médico cirujano.</div>
                 </div>
-  
+
                 <div class="col-md-4">
                   <label for="enfermero" class="form-label">Enfermero</label>
                   <select class="form-select" id="enfermero" name="enfermero" required>
@@ -227,7 +227,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione un enfermero.</div>
                 </div>
-  
+
                 <div class="col-md-4">
                   <label for="anestesiologo" class="form-label">Anestesiólogo</label>
                   <select class="form-select" id="anestesiologo" name="anestesiologo" required>
@@ -235,7 +235,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione un anestesiólogo.</div>
                 </div>
-  
+
                 <div class="col-12">
                   <label for="diagnostico" class="form-label">Diagnóstico</label>
                   <!-- size=7 -> NO le aplicaremos Choices.js para que conserve el alto -->
@@ -247,105 +247,109 @@
               </div>
             </div>
           </div>
-  
+
           <!-- CARD: Tiempos de Cirugía -->
           <div class="card mb-4">
             <div class="card-header bg-success text-white fw-bold">Tiempos de Cirugía</div>
             <div class="card-body">
               <div class="row g-3">
-  
+
                 <div class="col-md-2">
                   <label for="hora_llamada_hospitalizado" class="form-label">Hora de llamada del paciente
                     hospitalizado<span class="text-danger">*</span></label>
                   <input type="time" class="form-control" id="hora_llamada_hospitalizado"
                     name="hora_llamada_hospitalizado">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_llamada_emergencia" class="form-label">Hora de llamada del paciente de
                     emergencia</label>
                   <input type="time" class="form-control" id="hora_llamada_emergencia" name="hora_llamada_emergencia">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_cirugia_programada" class="form-label">Hora de la cirugía programada (solo si es
                     programada)</label>
                   <input type="time" class="form-control" id="hora_cirugia_programada" name="hora_cirugia_programada">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_llegada_cqx" class="form-label">Hora de llegada del paciente a CQX</label>
                   <input type="time" class="form-control" id="hora_llegada_cqx" name="hora_llegada_cqx" required>
                 </div>
-  
+
                 <div class="col-md-2">
-                  <label for="hora_entrada_quirofano" class="form-label">Hora de entrada del paciente a quirófano</label>
+                  <label for="hora_entrada_quirofano" class="form-label">Hora de entrada del paciente a
+                    quirófano</label>
                   <input type="time" class="form-control" id="hora_entrada_quirofano" name="hora_entrada_quirofano"
                     required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_llegada_anestesiologo" class="form-label">Hora de llegada del anestesiólogo</label>
                   <input type="time" class="form-control" id="hora_llegada_anestesiologo"
                     name="hora_llegada_anestesiologo" required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_inicio_anestesia" class="form-label">Hora inicio anestesia</label>
                   <input type="time" class="form-control" id="hora_inicio_anestesia" name="hora_inicio_anestesia"
                     required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_fin_anestesia" class="form-label">Hora finalización anestesia</label>
                   <input type="time" class="form-control" id="hora_fin_anestesia" name="hora_fin_anestesia" required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_salida_anestesiologo" class="form-label">Hora salida de quirófano del
                     anestesiólogo</label>
-                  <input type="time" class="form-control" id="hora_salida_anestesiologo" name="hora_salida_anestesiologo"
-                    required>
+                  <input type="time" class="form-control" id="hora_salida_anestesiologo"
+                    name="hora_salida_anestesiologo" required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_llegada_cirujano" class="form-label">Hora llegada a quirófano del cirujano</label>
                   <input type="time" class="form-control" id="hora_llegada_cirujano" name="hora_llegada_cirujano"
                     required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_inicio_cirujano" class="form-label">Hora inicio cirujano</label>
-                  <input type="time" class="form-control" id="hora_inicio_cirujano" name="hora_inicio_cirujano" required>
+                  <input type="time" class="form-control" id="hora_inicio_cirujano" name="hora_inicio_cirujano"
+                    required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_fin_cirujano" class="form-label">Hora finalización cirujano</label>
                   <input type="time" class="form-control" id="hora_fin_cirujano" name="hora_fin_cirujano" required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_salida_cirujano" class="form-label">Hora salida del cirujano</label>
-                  <input type="time" class="form-control" id="hora_salida_cirujano" name="hora_salida_cirujano" required>
+                  <input type="time" class="form-control" id="hora_salida_cirujano" name="hora_salida_cirujano"
+                    required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_inicio_desinfeccion" class="form-label">Inicio desinfección enfermería</label>
                   <input type="time" class="form-control" id="hora_inicio_desinfeccion" name="hora_inicio_desinfeccion"
                     required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_fin_desinfeccion" class="form-label">Final desinfección enfermería</label>
                   <input type="time" class="form-control" id="hora_fin_desinfeccion" name="hora_fin_desinfeccion"
                     required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_inicio_limpieza" class="form-label">Inicio limpieza externa</label>
-                  <input type="time" class="form-control" id="hora_inicio_limpieza" name="hora_inicio_limpieza" required>
+                  <input type="time" class="form-control" id="hora_inicio_limpieza" name="hora_inicio_limpieza"
+                    required>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="hora_fin_limpieza" class="form-label">Final limpieza externa</label>
                   <input type="time" class="form-control" id="hora_fin_limpieza" name="hora_fin_limpieza" required>
@@ -353,43 +357,44 @@
               </div>
             </div>
           </div>
-  
+
           <!-- CARD: Observaciones de CIrugia -->
           <div class="card mb-4">
             <div class="card-header bg-secondary text-white fw-bold">Observaciones de Cirugía</div>
             <div class="card-body">
               <div class="row g-3">
-  
+
                 <div class="col-12">
                   <label for="observaciones" class="form-label">Observaciones</label>
-                  <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Escriba aquí observaciones adicionales"></textarea>
+                  <textarea class="form-control" id="observaciones" name="observaciones" rows="3"
+                    placeholder="Escriba aquí observaciones adicionales"></textarea>
                 </div>
-                
+
                 <div class="col-12">
                   <label for="procedimientoRealizado" class="form-label">Procedimiento Realizado</label>
                   <input type="text" class="form-control" id="procedimientoRealizado" name="procedimientoRealizado">
                 </div>
-                
+
                 <div class="col-3">
                   <label for="priayudantecir" class="form-label">Primer Ayudante Cirujano</label>
                   <input type="text" class="form-control" id="priayudantecir" name="priayudantecir">
                 </div>
-  
+
                 <div class="col-3">
                   <label for="segayudantecir" class="form-label">Segundo Ayudante Cirujano</label>
                   <input type="text" class="form-control" id="segayudantecir" name="segayudantecir">
-                </div>              
-                
+                </div>
+
                 <div class="col-3">
                   <label for="ayudanteAnestesiologo" class="form-label">Ayudante Anestesiólogo</label>
                   <input type="text" class="form-control" id="ayudanteAnestesiologo" name="ayudanteAnestesiologo">
                 </div>
-  
+
                 <div class="col-3">
                   <label for="priayudanteenf" class="form-label">Ayudante Enfermeria</label>
                   <input type="text" class="form-control" id="priayudanteenf" name="priayudanteenf">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="tipoAnestesia" class="form-label">Tipo de Anestesia</label>
                   <select class="form-select" id="tipoAnestesia" name="tipoAnestesia" required>
@@ -401,27 +406,27 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-                
+
                 <div class="col-md-3">
                   <label for="instrumentista" class="form-label">Instrumentista</label>
                   <input type="text" class="form-control" id="instrumentista" name="instrumentista">
                 </div>
-                
+
                 <div class="col-md-3">
                   <label for="circulante" class="form-label">Circulante</label>
                   <input type="text" class="form-control" id="circulante" name="circulante">
                 </div>
-                
+
                 <div class="col-md-3">
                   <label for="instrumentistaRecibe" class="form-label">Instrumentista que recibe</label>
                   <input type="text" class="form-control" id="instrumentistaRecibe" name="instrumentistaRecibe">
                 </div>
-                
+
                 <div class="col-md-3">
                   <label for="circulanteRecibe" class="form-label">Circulante que recibe</label>
                   <input type="text" class="form-control" id="circulanteRecibe" name="circulanteRecibe">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="canalizaPaciente" class="form-label">Canaliza o recanaliza paciente</label>
                   <select class="form-select" id="canalizaPaciente" name="canalizaPaciente" required>
@@ -431,7 +436,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="recuperacion" class="form-label">Recuperación / UCI / Hospital del día</label>
                   <select class="form-select" id="recuperacion" name="recuperacion" required>
@@ -447,9 +452,10 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
-                  <label for="listaVerificacion" class="form-label">Se realiza lista de verificación de cirugía segura</label>
+                  <label for="listaVerificacion" class="form-label">Se realiza lista de verificación de cirugía
+                    segura</label>
                   <select class="form-select" id="listaVerificacion" name="listaVerificacion" required>
                     <option value="" selected disabled>Seleccione...</option>
                     <option value="1">SI</option>
@@ -457,7 +463,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="profilaxis" class="form-label">Profilaxis</label>
                   <select class="form-select" id="profilaxis" name="profilaxis" required>
@@ -467,7 +473,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="marcacionQuirurgica" class="form-label">Marcación quirúrgica</label>
                   <select class="form-select" id="marcacionQuirurgica" name="marcacionQuirurgica" required>
@@ -477,7 +483,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="pacienteBrazalete" class="form-label">Brazalete</label>
                   <select class="form-select" id="pacienteBrazalete" name="pacienteBrazalete" required>
@@ -487,7 +493,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-                
+
                 <div class="col-md-2">
                   <label for="pacienteIdentificado" class="form-label">Paciente identificado</label>
                   <select class="form-select" id="pacienteIdentificado" name="pacienteIdentificado" required>
@@ -497,7 +503,7 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="suspendidoPor" class="form-label">Suspendido por</label>
                   <select class="form-select" id="suspendidoPor" name="suspendidoPor" required>
@@ -507,17 +513,17 @@
                   </select>
                   <div class="invalid-feedback">Seleccione</div>
                 </div>
-                
+
                 <div class="col-md-2">
                   <label for="horaEntrega" class="form-label">Hora de entrega de paciente a recuperación</label>
                   <input type="time" class="form-control" id="horaEntrega" name="horaEntrega">
                 </div>
-  
+
                 <div class="col-md-2">
                   <label for="horaTraenParte" class="form-label">Hora Que traen el Parte</label>
                   <input type="time" class="form-control" id="horaTraenParte" name="horaTraenParte">
                 </div>
-                
+
                 <div class="col-md-2">
                   <label for="fechaEntrega" class="form-label">Fecha en la que es entregado el parte</label>
                   <input type="date" class="form-control" id="fechaEntrega" name="fechaEntrega">
@@ -525,8 +531,8 @@
               </div>
             </div>
           </div>
-  
-  
+
+
           <div class="col-12 text-center mt-4">
             <button type="submit" class="btn btn-primary btn-lg px-5">Guardar</button>
           </div>
@@ -538,27 +544,27 @@
       <!-- =========================
      Vista: Estadísticas
      ========================= -->
-     <div id="estadisticasView" style="display:none;">
-      <h2>Estadísticas</h2>
-    
-      <!-- Filtro de fecha -->
-      <label for="fechaFiltro">Filtrar por fecha:</label>
-      <input type="date" id="fechaFiltro" class="form-control mb-3">
-    
-      <!-- Gráficos -->
-      <div class="chart-container">
-        <canvas id="graficoProcedimientos"></canvas>
+      <div id="estadisticasView" style="display:none;">
+        <h2>Estadísticas</h2>
+
+        <!-- Filtro de fecha -->
+        <label for="fechaFiltro">Filtrar por fecha:</label>
+        <input type="date" id="fechaFiltro" class="form-control mb-3">
+
+
+        <div class="chart-container">
+          <iframe title="ANALISIS" width="1200" height="720" 
+                  src="https://app.powerbi.com/view?r=eyJrIjoiNTRjMDViMDktODc1ZS00NWZiLWExNjAtOGQ1YTY0YzNkNjdiIiwidCI6IjZhNmNlOGVkLTBlMGYtNDY4YS05Yzg1LWU3Y2U0ZjIxZjRmMiJ9" 
+                  frameborder="0" allowFullScreen="true">
+          </iframe>
+        </div>
       </div>
-      <div class="chart-container">
-        <canvas id="graficoSexo"></canvas>
-      </div>
-    </div>
 
       <!-- =========================
            Vista: Registros guardados
            ========================= -->
       <div id="tablaView" style="display:none;">
-        
+
         <h3>Pacientes Registrados</h3>
 
         <!-- Buscador -->
@@ -566,13 +572,13 @@
 
         <!-- Tabla -->
         <div class="tabla-contenedor">
-        <table id="tablaPacientes" class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr id="encabezados"></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+          <table id="tablaPacientes" class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr id="encabezados"></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
 
         <!-- Controles de paginación -->
         <div class="d-flex justify-content-between align-items-center">

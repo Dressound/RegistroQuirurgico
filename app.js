@@ -69,19 +69,17 @@ function mostrarApp(user) {
   usuarioLogueado = user;
   sessionStorage.setItem("usuarioLogueado", JSON.stringify(user));
 
+  // Ocultar login y mostrar aplicación
   $("#loginView").style.display = "none";
   $("#appView").style.display = "block";
   $("#welcomeBar").style.display = "block";
   $("#welcomeText").innerHTML = `Bienvenid@, <b>${user.nombre}</b>`;
-  $("#usuario_registro").value = user.nombre;
 
-  // Mostrar/Ocultar botones según rol
   // Mostrar botones según rol
   const botones = ["#btnFormulario", "#btnRegistros", "#btnEstadisticas"];
   botones.forEach(id => $(id).style.display = "inline-block");
 
-  $("#usuario_registro").value = user.nombre;
-
+  // Cargar opciones si no se han cargado
   if (!opcionesCargadas) cargarOpciones();
 }
 
@@ -415,19 +413,23 @@ setInterval(() => {
 }, 30000);
 
 
-  // Botón “Estadísticas”
-  $("#btnEstadisticas").addEventListener("click", () => {
-    if (usuarioLogueado.rol !== "admin") {
-      return mostrarMensajePermiso("No tienes permisos para ver estadísticas");
-    }
-    $("#tablaView").style.display = "none";
-    $("#formularioView").style.display = "none";
-    $("#estadisticasView").style.display = "block";
+$("#btnEstadisticas").addEventListener("click", () => {
+  if (!usuarioLogueado || usuarioLogueado.rol !== "admin") {
+    // Mostrar mensaje si no tiene permisos
+    return mostrarMensajePermiso("No tienes permisos para ver estadísticas");
+  }
 
-    // Generar gráficos con la fecha que esté seleccionada (vacía = todo)
-    const fecha = $("#fechaFiltro").value;
-    generarEstadisticas(fecha);
-  });
+  // Ocultar otras vistas
+  $("#tablaView").style.display = "none";
+  $("#formularioView").style.display = "none";
+  
+  // Mostrar vista de estadísticas
+  $("#estadisticasView").style.display = "block";
+
+  // Generar gráficos con la fecha que esté seleccionada (vacía = todo)
+  const fecha = $("#fechaFiltro").value;
+  generarEstadisticas(fecha);
+});
 
   // Filtro de fecha
   $("#fechaFiltro").addEventListener("change", (e) => {
@@ -472,6 +474,7 @@ setInterval(() => {
     const usuario = $("#usuario").value.trim();
     const password = $("#password").value.trim();
     const user = intentarLogin(usuario, password);
+    
     if (user) {
       loginError.textContent = "";
       mostrarApp(user);
