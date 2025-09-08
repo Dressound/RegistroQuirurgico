@@ -2,6 +2,6 @@
   { "usuario": "Andres.Ruilova", "password": "123456", "nombre": "Admin. Andres Ruilova", "rol": "admin" },
   { "usuario": "Vargas.Pamela", "password": "123456", "nombre": "Lic. Pamela Vargas", "rol": "usuario" },
   { "usuario": "Jesica.Alvarez", "password": "123456", "nombre": "Dra. Jesica Alvarez", "rol": "usuario" },
-  { "usuario": "jhonny", "password": "123456", "nombre": "Enf. Jhonny Rosero", "rol": "usuario" }
+  { "usuario": "jhonny", "password": "123456", "nombre": "Enf. Jhonny Rosero", "rol": "usuario" },
   { "usuario": "Fabricio.Toaquiza", "password": "123456", "nombre": "Lic. Fabricio Toaquiza", "rol": "usuario" }
 ]
